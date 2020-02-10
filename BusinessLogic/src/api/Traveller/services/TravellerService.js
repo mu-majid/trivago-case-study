@@ -61,7 +61,7 @@ async function auditTravellerPointsUpdate (travellerKey, userId, bonusPoints) {
     }
   }
   const auditOptions = {
-    url: `${services.monitoring.uri}:${services.monitoring.port}/api/audit`,
+    url: `${services.monitoring.uri}/api/audit`,
     headers:
     {
       'accept': 'application/json',

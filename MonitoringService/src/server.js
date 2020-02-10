@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 const { server, database } = require('./config/config');
 const apiController = require('./api/index');
+const authenticateService = require('./middleware/authenticateService');
 
 (async () => {
 
@@ -16,7 +17,7 @@ const apiController = require('./api/index');
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
   
-  app.use('/api', apiController);
+  app.use('/api', authenticateService, apiController);
   
   app.listen(server.port, () => {
     console.log(`Server started at ${server.port} ...`);

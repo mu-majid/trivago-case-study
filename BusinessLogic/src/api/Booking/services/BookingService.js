@@ -47,7 +47,7 @@ function canUsePoints(travellerPoints, roomRequiredPoints) {
 
 async function auditBookingChanges (auditPayload) {
   const auditOptions = {
-    url: `${services.monitoring.uri}:${services.monitoring.port}/api/audit`,
+    url: `${services.monitoring.url}/api/audit`,
     headers:
     {
       'accept': 'application/json',

@@ -9,7 +9,7 @@ module.exports = {
   },
   authorizedServices: [
     {
-      business: process.env.BUSINESS_KEY || 'BUSINESS_MONITORING_TOKEN'
+      business: process.env.BUSINESS_KEY || 'businesskey'
     }
   ]
 }

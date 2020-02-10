@@ -11,8 +11,7 @@ module.exports = {
   },
   services: {
     monitoring: {
-      uri: process.env.MONITOR_URI || 'http://localhost',
-      port: process.env.MONITOR_PORT || '3001'
+      url: process.env.MONITOR_URI || 'http://localhost:3001'
     }
   },
   access_token: { // used by business to identify itself to monitoring
