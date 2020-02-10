@@ -59,6 +59,7 @@ services:
       - DB_HOST=mongo
       - DB_PORT=27017
       - DB_NAME=trivago_gw
+      - TESTING_DB_NAME=trivago_gw_test
       - BUSINESS_SERVICE_URL=http://business:3000
       - API_GATEWAY_KEY=apigateway 
     ports:
