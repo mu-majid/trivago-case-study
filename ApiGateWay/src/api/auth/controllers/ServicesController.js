@@ -68,7 +68,7 @@ async function makeReservation (req, res) {
 
 async function abortReservation (req, res) {
   
-  const path = `/api/bookings/${req.body.bookingKey}/cancel`;
+  const path = `/api/bookings/${req.params.bookingKey}/cancel`;
   const options = {
     url: `${services.business.url}${path}`,
     headers: {
@@ -107,7 +107,7 @@ async function abortReservation (req, res) {
       payload: req.body 
     });
 
-    console.log(`Error while trying to cancel reservation ${req.body.bookingKey}:  ${e.message}`);
+    console.log(`Error while trying to cancel reservation ${req.params.bookingKey}:  ${e.message}`);
 
     return res.status(400).send({message: `Couldn\'t cancel reservation  with error ${e.message}.`});
   }

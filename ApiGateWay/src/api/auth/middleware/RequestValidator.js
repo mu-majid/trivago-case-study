@@ -1,7 +1,7 @@
 const Joi = require('joi');
 const middleware = (schema) => {
   return (req, res, next) => {
-    const { error } = Joi.validate(req, schema);
+    const { error } = Joi.validate(req, schema, { abortEarly: false, allowUnknown: true });
     const valid = error == null;
 
     if (valid) {

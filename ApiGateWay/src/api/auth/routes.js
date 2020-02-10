@@ -1,13 +1,24 @@
-const servicesCtrl = require('./controllers/ServicesController');
-const publicAuth = require('./middleware/PublicAuth');
-const privateAuth = require('./middleware/PrivateAuth');
-
 
 const express = require('express');
 const router = express.Router();
 
-router.post('/bookings', publicAuth, servicesCtrl.makeReservation);
-router.post('/bookings/:bookingKey/cancel', publicAuth,  servicesCtrl.abortReservation);
+const servicesCtrl = require('./controllers/ServicesController');
+const publicAuth = require('./middleware/PublicAuth');
+const privateAuth = require('./middleware/PrivateAuth');
+const RequestValidator = require('./middleware/RequestValidator');
+const { makeReservationSchema, cancelReservationSchema } = require('./schema/schemas');
+
+router.post('/bookings', [
+  RequestValidator(makeReservationSchema), 
+  publicAuth, 
+  servicesCtrl.makeReservation
+]);
+
+router.post('/bookings/:bookingKey/cancel', [
+  RequestValidator(cancelReservationSchema),
+  publicAuth, 
+  servicesCtrl.abortReservation
+]);
 
 router.post('/rooms', privateAuth, servicesCtrl.createRoom);
 

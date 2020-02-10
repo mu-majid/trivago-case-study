@@ -12,5 +12,9 @@ module.exports = {
       url: process.env.BUSINESS_SERVICE_URL || 'http://localhost:3000'
     }
   },
-  access_key: process.env.API_GATEWAY_KEY || 'apigateway' // used by gw to identify itself to business service
+  access_key: process.env.API_GATEWAY_KEY || 'apigateway', // used by gw to identify itself to business service
+  roles: {
+    CUSTOMER: 'CUSTOMER',
+    ADMIN: 'ADMIN'
+  }
 }
