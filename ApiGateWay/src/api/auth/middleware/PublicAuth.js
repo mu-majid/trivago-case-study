@@ -12,23 +12,6 @@ async function isAuthorizedPublic (req, res, next) {
     return res.status(400).send({ message: 'User email (if new user) or id are required' });
   }
 
-  if (!req.headers || !req.headers.authorization) {
-    return res.status(401).send({ message: 'No authorization headers.' });
-  }
-
-  const publicApiKey = req.headers.authorization.split(' ');
-
-  if (publicApiKey.length != 2) {
-    return res.status(401).send({ message: 'Malformed Api Key.' });
-  }
-
-  const publicKey = publicApiKey[1];
-  const consumer = await Consumer.findOne({ api_key: publicKey }).lean().exec();
-
-  if (!consumer || consumer.type !== 'public') {
-    return res.status(401).send({ message: 'Consumer Api Key Does Not Exist.' });
-  }
-
   const user = await User.findOne({$or: [{ email }, { userId }]}).lean().exec();
 
   if (user) {

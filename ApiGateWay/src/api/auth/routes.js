@@ -11,7 +11,7 @@ router.post('/bookings/:bookingKey/cancel', publicAuth,  servicesCtrl.abortReser
 
 router.post('/rooms', privateAuth, servicesCtrl.createRoom);
 
-router.post('/travellers', publicAuth, servicesCtrl.createTraveller);
+router.post('/travellers', servicesCtrl.createTraveller);
 router.put('/travellers/:travellerKey/points', privateAuth, servicesCtrl.updateTravellerPoints);
 
 
