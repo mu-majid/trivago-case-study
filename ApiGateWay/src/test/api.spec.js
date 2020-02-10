@@ -11,8 +11,6 @@ const {app} = require('../server');
 const Consumer = require('../api/auth/models/Consumer');
 const User = require('../api/auth/models/User');
 const { database } = require('../config/config');
-
-// request = request(app);
 const users = [
   {
     email: "admin@admin.com",

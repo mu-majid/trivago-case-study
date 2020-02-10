@@ -3,9 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "nyc": {
+    "include": "src",
+    "exclude": "src/api/auth/controllers" 
+  },
   "scripts": {
-    "test": "export NODE_ENV=testing && mocha 'src/**/**.spec.js'",
-    "test-cov": "export NODE_ENV=testing && nyc mocha 'src/**/**.spec.js'",
+    "test": "export NODE_ENV=testing && mocha --exit 'src/**/**.spec.js'",
+    "test-cov": "export NODE_ENV=testing && nyc mocha --exit 'src/**/**.spec.js'",
     "start": "node src/server.js"
   },
   "keywords": [],
