@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose')
 
 const TravellerSchema = new Schema({
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   travellerKey: { type: String, required: true },
   bonusPoints: { type: Number, default: 0 }
 }, { timestamps: true });

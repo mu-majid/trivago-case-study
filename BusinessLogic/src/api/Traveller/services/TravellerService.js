@@ -19,6 +19,10 @@ async function updateOne(travellerKey, updateObj) {
     }
   ).lean().exec();
 
+  if (!updatedTraveller) {
+    return null;
+  }
+
   return {
     travellerKey: updatedTraveller.travellerKey,
     bonusPoints: updatedTraveller.bonusPoints,

@@ -9,7 +9,7 @@ async function isAuthorizedPublic (req, res, next) {
   const {email, userId} = req.body;
 
   if (!(email || userId)) {
-    return res.status(400).send({ message: 'User email or id are required' });
+    return res.status(400).send({ message: 'User email (if new user) or id are required' });
   }
 
   if (!req.headers || !req.headers.authorization) {
@@ -26,7 +26,7 @@ async function isAuthorizedPublic (req, res, next) {
   const consumer = await Consumer.findOne({ api_key: publicKey }).lean().exec();
 
   if (!consumer || consumer.type !== 'public') {
-    return res.status(401).send({ message: 'Api Key Does Not Exist.' });
+    return res.status(401).send({ message: 'Consumer Api Key Does Not Exist.' });
   }
 
   const user = await User.findOne({$or: [{ email }, { userId }]}).lean().exec();
@@ -57,7 +57,7 @@ async function isAuthorizedPublic (req, res, next) {
       console.log('Business Service Error: ', error.message);
       return res.status(404).send({ message: 'User Was not Found In Our System.' });
     }
-    
+
     await User.create({ email: traveller.email, userId: traveller.travellerKey, role: 'CUSTOMER' });
 
     req.headers.userId = traveller.travellerKey;

@@ -2,6 +2,8 @@ const { Schema, model } = require('mongoose')
 
 const LogSchema = new Schema({
   userId: { type: Schema.Types.Mixed },
+  method: { type: String },
+  status: { type: String },
   path: { type: String },
   statusCode: { type: Number },
   response: { type: Schema.Types.Mixed },

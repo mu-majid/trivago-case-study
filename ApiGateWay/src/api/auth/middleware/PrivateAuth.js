@@ -23,15 +23,14 @@ async function isAuthorizedPrivate (req, res, next) {
 
   const privateKey = privateApiKey[1];
   const consumer = await Consumer.findOne({ api_key: privateKey }).lean().exec();
-console.log(privateKey);
 
   if (!consumer || consumer.type !== 'private') {
-    return res.status(401).send({ message: 'Api Key Does Not Exist.' });
+    return res.status(401).send({ message: 'Consumer Api Key Does Not Exist.' });
   }
 
   const user = await User.findOne({$or: [{ email }, { userId }]}).lean().exec();
 
-  if (!user || user.type !== 'ADMIN') {
+  if (!user || user.role !== 'ADMIN') {
     // since the api key exist (let's say authenticated) we should return forbidden.
     return res.status(403).send({ message: 'Forbidden Action' });
   }

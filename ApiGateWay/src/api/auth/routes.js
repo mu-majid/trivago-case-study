@@ -12,7 +12,7 @@ router.post('/bookings/:bookingKey/cancel', publicAuth,  servicesCtrl.abortReser
 router.post('/rooms', privateAuth, servicesCtrl.createRoom);
 
 router.post('/travellers', publicAuth, servicesCtrl.createTraveller);
-// router.put('/travellers/:travellerKey/points', privateAuth, servicesCtrl.updateTravellerPoints);
+router.put('/travellers/:travellerKey/points', privateAuth, servicesCtrl.updateTravellerPoints);
 
 
 module.exports = router;

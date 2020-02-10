@@ -4,8 +4,8 @@ const router = express.Router();
 const { publicAccessPolicyKey, privateAccessPolicyKey } = require('../../config/config');
 const canAccessRouter = require('../../middleware/canAccessRouter');
 
-const hasPublicApiKey = canAccessRouter(publicAccessPolicyKey);
+const hasPrivateApiKey = canAccessRouter(privateAccessPolicyKey);
 
-router.post('/', hasPublicApiKey, roomCtrl.createRoom);
+router.post('/', hasPrivateApiKey, roomCtrl.createRoom);
 
 module.exports = router;

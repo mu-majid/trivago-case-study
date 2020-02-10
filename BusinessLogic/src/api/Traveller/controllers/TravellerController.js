@@ -18,9 +18,11 @@ async function getTraveller(req, res) {
 
 async function createTraveller(req, res) {
   const travellerData = req.body;
+
   if (!travellerData.email) {
     return res.status(400).send({ message: 'Email Is Required!' });
   }
+  
   try {
     // handle existing travellers
     const createdTraveller = await travellerService.create(travellerData);
