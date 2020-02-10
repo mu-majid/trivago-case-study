@@ -38,6 +38,7 @@ services:
       - DB_HOST=mongo
       - DB_PORT=27017
       - DB_NAME=trivago_dev
+      - TESTING_DB_NAME=trivago_test
       - MONITOR_URI=http://monitoring:3001
       - API_GATEWAY_KEY=apigateway
       - BUSINESS_KEY=businesskey

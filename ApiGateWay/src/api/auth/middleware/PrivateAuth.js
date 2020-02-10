@@ -12,7 +12,12 @@ async function isAuthorizedPrivate (req, res, next) {
     return res.status(404).send({ message: 'User does not exist.' });
   }
 
-  if (req.headers.consumer_type !== 'private' || user.role !== roles.ADMIN) {
+  if (req.headers.consumer_type !== 'private') {
+    console.log(`PrivateAuth Error: User ${(userId || email)} did not send private api key.`);
+    return res.status(401).send({ message: 'Unauthorized Action' });
+  }
+
+  if (user.role !== roles.ADMIN) {
     // since the api key exist (let's say authenticated) we should return forbidden.
 
     console.log(`PrivateAuth Error: User ${(userId || email)} sent private key, but his role is not ${roles.ADMIN}.`);

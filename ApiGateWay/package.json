@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "export NODE_ENV=testing && mocha 'src/**/**.spec.js'",
+    "test-cov": "export NODE_ENV=testing && nyc mocha 'src/**/**.spec.js'",
     "start": "node src/server.js"
   },
   "keywords": [],
@@ -17,10 +18,12 @@
     "joi": "^14.3.1",
     "mocha": "^7.0.1",
     "mongoose": "^5.8.11",
+    "nyc": "^15.0.0",
     "query-string": "^6.10.1",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.8",
     "sinon": "^8.1.1",
+    "supertest": "^4.0.2",
     "uuid": "^3.4.0"
   }
 }

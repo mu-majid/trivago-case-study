@@ -31,7 +31,7 @@ async function makeReservation (req, res) {
     if (foundRoom.availableAmount < 1) {
       // Conflict
       return res.status(409).send({ message: 
-        `Could Not Book Room ${foundRoom.name} because all are already booked.` 
+        `Could Not Book Room ${foundRoom.roomName} because all are already booked.` 
       });
     }
 

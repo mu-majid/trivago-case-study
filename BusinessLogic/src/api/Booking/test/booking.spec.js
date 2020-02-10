@@ -30,19 +30,19 @@ const travellers = [
 
 const rooms = [
   {
-    name: "Suite C2",
+    roomName: "Suite C2",
     requiredPoints: 250,
     availableAmount: 2,
     roomKey: 'RoomOne'
   },
   {
-    name: "Single Room C2",
+    roomName: "Single Room C2",
     requiredPoints: 100,
     availableAmount: 1,
     roomKey: 'RoomTwo'
   },
   {
-    name: "Single Room C3",
+    roomName: "Single Room C3",
     requiredPoints: 100,
     availableAmount: 1,
     roomKey: 'dummyRoom'
@@ -61,7 +61,7 @@ const bookings = [
 
 before(async function ()  {
   await mongoose.connect(
-    `mongodb://${database.host}:${database.port}/${(process.env.NODE_ENV === 'testing') ? database.dbNameTesting : database.dbName }`,
+    `mongodb://${database.host}:${database.port}/${(process.env.NODE_ENV === 'testing') ? database.dbNameTesting : 'business_testing_db' }`,
     { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
   );
 });
@@ -95,7 +95,7 @@ describe('bookingService Unit Test', () => {
 
   describe('findOne', () => {
     it('Should find booking record', async () => {
-      const result = await bookingService.findOne('BookingOne');
+      const result = await bookingService.findOne('BookingOne', 'dummyTraveller');
       expect(result).to.haveOwnProperty('_id');
     });
 

@@ -6,7 +6,7 @@ const roomService = require('../services/RoomService');
 
 async function createRoom (req, res) {
   const roomData = req.body;
-  if (!(roomData.name && roomData.requiredPoints && roomData.availableAmount)) {
+  if (!(roomData.roomName && roomData.requiredPoints && roomData.availableAmount)) {
     return res.status(400).send({ message: '(name, requiredPoints, availableAmount) Are Required!' });
   }
   try {

@@ -30,6 +30,8 @@ async function create(data) {
 
   return {
     roomKey: createdRoom.roomKey,
+    roomName: createdRoom.roomName,
+
     requiredPoints: createdRoom.requiredPoints,
     availableAmount: createdRoom.availableAmount
   }

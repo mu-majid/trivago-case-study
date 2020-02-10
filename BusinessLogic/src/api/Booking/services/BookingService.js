@@ -65,7 +65,7 @@ async function auditBookingChanges (auditPayload) {
 async function bookRoom (traveller, room, userId) {
   let booking;
   const { travellerKey, bonusPoints } = traveller;
-  const { roomKey, requiredPoints, availableAmount, name } = room;
+  const { roomKey, requiredPoints, availableAmount, roomName } = room;
   const result = canUsePoints(bonusPoints, requiredPoints);
 
   if (result.canBookWithPoints) {
@@ -99,7 +99,7 @@ async function bookRoom (traveller, room, userId) {
     data: {
       msg: `Reservation made with status of ${booking.status}.`,
       roomReserved: roomKey,
-      roomName: name,
+      roomName,
       roomRequiredPoints: requiredPoints,
       currentAvailableRooms: (availableAmount - 1),
 
@@ -131,7 +131,7 @@ async function cancelReservation(bookingToCancel, userId) {
       msg: `Reservation cancelled and changed status from ${status} to ${updatedBooking.status}.`,
       roomReleased: roomKey,
       travellerKey,
-      roomName: updatedRoom.name,
+      roomName: updatedRoom.roomName,
       currentAvailableRooms: updatedRoom.availableAmount,
       previousAvailableRooms: (updatedRoom.availableAmount - 1)
     }

@@ -6,7 +6,13 @@ const servicesCtrl = require('./controllers/ServicesController');
 const publicAuth = require('./middleware/PublicAuth');
 const privateAuth = require('./middleware/PrivateAuth');
 const RequestValidator = require('./middleware/RequestValidator');
-const { makeReservationSchema, cancelReservationSchema, createTravellerSchema } = require('./schema/schemas');
+const { 
+  makeReservationSchema,
+  cancelReservationSchema,
+  createTravellerSchema,
+  createRoomSchema,
+  updateTravellerPointsSchema
+} = require('./schema/schemas');
 
 router.post('/bookings', [
   RequestValidator(makeReservationSchema), 
@@ -20,13 +26,22 @@ router.post('/bookings/:bookingKey/cancel', [
   servicesCtrl.abortReservation
 ]);
 
-router.post('/rooms', privateAuth, servicesCtrl.createRoom);
+router.post('/rooms', [
+  RequestValidator(createRoomSchema), 
+  privateAuth, 
+  servicesCtrl.createRoom
+]);
 
 router.post('/travellers', [
   RequestValidator(createTravellerSchema),
   servicesCtrl.createTraveller
 ]);
-router.put('/travellers/:travellerKey/points', privateAuth, servicesCtrl.updateTravellerPoints);
+
+router.put('/travellers/:travellerKey/points',[
+  RequestValidator(updateTravellerPointsSchema), 
+  privateAuth, 
+  servicesCtrl.updateTravellerPoints
+]);
 
 
 module.exports = router;

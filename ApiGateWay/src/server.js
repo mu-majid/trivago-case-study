@@ -23,3 +23,5 @@ const gateWayAuth = require('./middleware/gatewayAuth');
     console.log(`Server started at ${server.port} ...`);
   });
 })();
+
+module.exports = { app };

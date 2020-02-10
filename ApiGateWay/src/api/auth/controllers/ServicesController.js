@@ -35,7 +35,6 @@ async function makeReservation (req, res) {
 
   try {
     const reservation = await request.post(options);
-
     await Log.create({ path,
       statusCode: 200,
       method: 'POST',

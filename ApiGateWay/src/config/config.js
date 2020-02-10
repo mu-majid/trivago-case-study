@@ -5,7 +5,8 @@ module.exports = {
   database: {
     host: process.env.DB_HOST || 'localhost',
     port: process.env.DB_PORT || '27017',
-    dbName: process.env.DB_NAME || 'trivago_gw'
+    dbName: process.env.DB_NAME || 'trivago_gw',
+    dbNameTesting: process.env.TESTING_DB_NAME || 'trivago_gw_test'
   },
   services: {
     business: {

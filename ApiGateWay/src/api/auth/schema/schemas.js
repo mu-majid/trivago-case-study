@@ -13,6 +13,7 @@ const makeReservationSchema = Joi.object({
   }).or('userId', 'email').required()
 });
 
+
 const cancelReservationSchema = Joi.object({
   headers: Joi.object({
     authorization: Joi.string().required()
@@ -28,6 +29,7 @@ const cancelReservationSchema = Joi.object({
   }).or('userId', 'email').required()
 });
 
+
 const createTravellerSchema = Joi.object({
   headers: Joi.object({
     authorization: Joi.string().required()
@@ -39,20 +41,42 @@ const createTravellerSchema = Joi.object({
   })
 });
 
-const getTravellerSchema = Joi.object({
+
+const createRoomSchema = Joi.object({
   headers: Joi.object({
     authorization: Joi.string().required()
   }),
 
   body: Joi.object({
-    name: Joi.string().optional(),
-    email: Joi.string().required()
-  })
+    roomName: Joi.string().required(),
+    requiredPoints: Joi.number().required(),
+    availableAmount: Joi.number().required(),
+    email: Joi.string(),
+    userId: Joi.string()
+  }).or('userId', 'email').required()
+});
+
+
+const updateTravellerPointsSchema = Joi.object({
+  headers: Joi.object({
+    authorization: Joi.string().required()
+  }),
+
+  params: Joi.object({
+    travellerKey: Joi.string().required()
+  }),
+
+  body: Joi.object({
+    bonusPoints: Joi.number().required(),
+    email: Joi.string(),
+    userId: Joi.string()
+  }).or('userId', 'email').required()
 });
 
 module.exports = {
   makeReservationSchema,
   cancelReservationSchema,
   createTravellerSchema,
-  getTravellerSchema
+  createRoomSchema,
+  updateTravellerPointsSchema
 }
