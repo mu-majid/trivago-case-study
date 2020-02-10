@@ -1,5 +1,4 @@
 const User = require('../models/User');
-const { access_key  } = require('../../../config/config');
 
 async function isAuthorizedPrivate (req, res, next) {
 
@@ -10,7 +9,7 @@ async function isAuthorizedPrivate (req, res, next) {
   }
 
   const user = await User.findOne({$or: [{ email }, { userId }]}).lean().exec();
-
+  
   if (!user) {
     return res.status(404).send({ message: 'User does not exist.' });
   }
@@ -21,9 +20,7 @@ async function isAuthorizedPrivate (req, res, next) {
     return res.status(403).send({ message: 'Forbidden Action' });
   }
 
-
   req.headers.userId = user.userId;
-  req.headers.api_key = access_key;
   return next();
 }
 

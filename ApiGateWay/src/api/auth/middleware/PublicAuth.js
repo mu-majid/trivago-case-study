@@ -1,6 +1,5 @@
 const request = require('request-promise-native');
 const User = require('../models/User');
-const Consumer = require('../models/Consumer');
 const { access_key, services  } = require('../../../config/config');
 const qs = require('query-string');
 
@@ -16,7 +15,6 @@ async function isAuthorizedPublic (req, res, next) {
 
   if (user) {
     req.headers.userId = user.userId;
-    req.headers.api_key = access_key;
     return next();
   }
   else {
@@ -43,9 +41,12 @@ async function isAuthorizedPublic (req, res, next) {
 
     await User.create({ email: traveller.email, userId: traveller.travellerKey, role: 'CUSTOMER' });
 
-    req.headers.userId = traveller.travellerKey;
-    req.headers.api_key = access_key;
+    if (traveller.travellerKey !== userId || traveller.email !== email) {
+      console.log('Error : Unauthorized Operation.');
+      return res.status(401).send({ message: 'You are not allowed to execute this operation.' });
+    }
 
+    req.headers.userId = traveller.travellerKey;
     return next();
   }
 }

@@ -211,7 +211,7 @@ async function createTraveller (req, res) {
 }
 
 async function updateTravellerPoints (req, res) {
-  const path = `/api/travellers/${req.body.travellerKey}/points`;
+  const path = `/api/travellers/${req.params.travellerKey}/points`;
   const options = {
     url: `${services.business.url}${path}`,
     headers: {
@@ -226,7 +226,6 @@ async function updateTravellerPoints (req, res) {
 
   try {
     const createdTraveller = await request.put(options);
-
     await Log.create({ path,
       statusCode: 200,
       method: 'PUT',

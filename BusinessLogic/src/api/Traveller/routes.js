@@ -4,12 +4,12 @@ const router = express.Router();
 const { publicAccessPolicyKey, privateAccessPolicyKey } = require('../../config/config');
 const canAccessRouter = require('../../middleware/canAccessRouter');
 
-const hasPublicApiKey = canAccessRouter(publicAccessPolicyKey);
+// const hasPublicApiKey = canAccessRouter(publicAccessPolicyKey);
 const hasPrivateApiKey = canAccessRouter(privateAccessPolicyKey);
 
 
 router.get('/', travellerCtrl.getTraveller);
-router.post('/', hasPublicApiKey, travellerCtrl.createTraveller);
+router.post('/', travellerCtrl.createTraveller);
 router.put('/:travellerKey/points', hasPrivateApiKey, travellerCtrl.updateTravellerPoints);
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const Consumer = require('../api/auth/models/Consumer');
+const { access_key  } = require('../config/config');
 
 async function gateWayAuth (req, res, next) {
   if (!req.headers || !req.headers.authorization) {
@@ -19,7 +20,7 @@ async function gateWayAuth (req, res, next) {
   }
 
   req.headers.consumer_type = consumer.type;
-
+  req.headers.api_key = access_key;
   return next();
 }
 
