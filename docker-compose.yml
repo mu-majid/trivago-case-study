@@ -1,0 +1,74 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo:3.7
+
+    volumes:
+      - mongodata:/data/db
+      - mongoconfig:/data/configdb
+    ports:
+      - "27017:27017"
+
+  business:
+    image: trivago/business_service
+
+    depends_on:
+      - mongo
+    environment:
+      - NODE_SERVER_PORT=3000
+      - DB_HOST=mongo
+      - DB_PORT=27017
+      - DB_NAME=trivago_dev
+      - MONITOR_URI=http://monitoring
+      - MONITOR_PORT=3001
+      - API_GATEWAY_KEY=apigateway
+      - BUSINESS_KEY=businesskey
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./BusinessLogic:/usr/src/app
+
+
+  monitoring:
+    image: trivago/monitoring_service
+
+    depends_on:
+      - mongo
+    environment:
+      - NODE_SERVER_PORT=3001
+      - DB_HOST=mongo
+      - DB_PORT=27017
+      - DB_NAME=trivago_audit
+      
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./MonitoringService:/usr/src/app
+
+
+  gateway:
+    image: trivago/api_gateway
+
+    depends_on:
+      - mongo
+    environment:
+      - API_GW_PORT=8080
+      - DB_HOST=mongo
+      - DB_PORT=27017
+      - DB_NAME=trivago_audit
+      - BUSINESS_SERVICE_URL=http://business:3000
+      - API_GATEWAY_KEY=apigateway
+      
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./ApiGateWay:/usr/src/app
+
+
+volumes:
+  mongodata:
+    driver: local
+  mongoconfig:
+    driver: local
+

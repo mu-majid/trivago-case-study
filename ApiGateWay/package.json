@@ -1,0 +1,25 @@
+{
+  "name": "ApiGateWay",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "export NODE_ENV=testing && mocha 'src/**/**.spec.js'",
+    "start": "node src/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "express": "^4.17.1",
+    "mocha": "^7.0.1",
+    "mongoose": "^5.8.11",
+    "query-string": "^6.10.1",
+    "request": "^2.88.0",
+    "request-promise-native": "^1.0.8",
+    "sinon": "^8.1.1",
+    "uuid": "^3.4.0"
+  }
+}
