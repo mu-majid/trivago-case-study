@@ -11,7 +11,7 @@ async function isAuthorizedPrivate (req, res, next) {
 
   const user = await User.findOne({$or: [{ email }, { userId }]}).lean().exec();
 
-  if (!user || ) {
+  if (!user) {
     return res.status(404).send({ message: 'User does not exist.' });
   }
 
