@@ -11,7 +11,6 @@ const makeReservationSchema = Joi.object({
     userId: Joi.string(),
     email: Joi.string()
   }).or('userId', 'email').required()
-
 });
 
 const cancelReservationSchema = Joi.object({
@@ -27,10 +26,33 @@ const cancelReservationSchema = Joi.object({
     userId: Joi.string(),
     email: Joi.string()
   }).or('userId', 'email').required()
+});
 
+const createTravellerSchema = Joi.object({
+  headers: Joi.object({
+    authorization: Joi.string().required()
+  }),
+
+  body: Joi.object({
+    name: Joi.string().optional(),
+    email: Joi.string().required()
+  })
+});
+
+const getTravellerSchema = Joi.object({
+  headers: Joi.object({
+    authorization: Joi.string().required()
+  }),
+
+  body: Joi.object({
+    name: Joi.string().optional(),
+    email: Joi.string().required()
+  })
 });
 
 module.exports = {
   makeReservationSchema,
-  cancelReservationSchema
+  cancelReservationSchema,
+  createTravellerSchema,
+  getTravellerSchema
 }

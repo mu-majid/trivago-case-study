@@ -41,7 +41,12 @@ async function isAuthorizedPublic (req, res, next) {
       return res.status(404).send({ message: 'User Was not Found In Our System.' });
     }
 
-    const createdUser = await User.create({ email: traveller.email, userId: traveller.travellerKey, role: roles.CUSTOMER });
+    const createdUser = await User.create({ 
+      email: traveller.email, 
+      userId: traveller.travellerKey, 
+      role: roles.CUSTOMER,
+      name: traveller.name
+    });
 
     if ((userId && traveller.travellerKey !== userId) || (email && traveller.email !== email)) {
       console.log('PublicAuth Error : Unauthorized Operation.');
