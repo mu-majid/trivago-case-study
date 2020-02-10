@@ -12,7 +12,8 @@ services:
       - "27017:27017"
 
   monitoring:
-    image: trivago/monitoring_service
+    build: 
+      context: ./MonitoringService
 
     depends_on:
       - mongo
@@ -22,14 +23,12 @@ services:
       - DB_PORT=27017
       - DB_NAME=trivago_audit
       - BUSINESS_KEY=businesskey
-      
-    ports:
-      - "3001:3001"
     volumes:
       - ./MonitoringService:/usr/src/app
 
   business:
-    image: trivago/business_service
+    build: 
+      context: ./BusinessLogic
 
     depends_on:
       - mongo
@@ -44,13 +43,12 @@ services:
       - BUSINESS_KEY=businesskey
       - PUBLIC_ACCESS_KEY=public-api-secret
       - PRIVATE_ACCESS_KEY=private-api-secret
-    ports:
-      - "3000:3000"
     volumes:
       - ./BusinessLogic:/usr/src/app
 
   gateway:
-    image: trivago/api_gateway
+    build: 
+      context: ./ApiGateWay
 
     depends_on:
       - mongo
@@ -61,8 +59,7 @@ services:
       - DB_PORT=27017
       - DB_NAME=trivago_gw
       - BUSINESS_SERVICE_URL=http://business:3000
-      - API_GATEWAY_KEY=apigateway
-      
+      - API_GATEWAY_KEY=apigateway 
     ports:
       - "8080:8080"
     volumes:

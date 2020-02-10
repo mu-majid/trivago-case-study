@@ -14,8 +14,14 @@ async function isAuthorizedPublic (req, res, next) {
   const user = await User.findOne({$or: [{ email }, { userId }]}).lean().exec();
 
   if (user) {
+
+    if ((userId && user.userId !== userId) || (email && user.email !== email)) {
+      console.log('Error : Unauthorized Operation.');
+      return res.status(401).send({ message: 'You are not allowed to execute this operation.' });
+    }
+  
     req.headers.userId = user.userId;
-    return next();
+
   }
   else {
     // check if user is traveller and is in business DB
@@ -41,14 +47,19 @@ async function isAuthorizedPublic (req, res, next) {
 
     await User.create({ email: traveller.email, userId: traveller.travellerKey, role: 'CUSTOMER' });
 
-    if (traveller.travellerKey !== userId || traveller.email !== email) {
+    console.log(traveller.travellerKey ,userId ,traveller.email, email)
+    console.log(traveller.travellerKey !== userId)
+    console.log(traveller.email !== email)
+
+    if ((userId && traveller.travellerKey !== userId) || (email && traveller.email !== email)) {
       console.log('Error : Unauthorized Operation.');
       return res.status(401).send({ message: 'You are not allowed to execute this operation.' });
     }
 
     req.headers.userId = traveller.travellerKey;
-    return next();
   }
+
+  return next();
 }
 
 module.exports = isAuthorizedPublic;
