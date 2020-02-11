@@ -51,9 +51,9 @@ experienced engineers with strong knowledge in NodeJS and while other programmin
 were on the table, the team decided to proceed with Node only. It is your task to develop a
 containerized prototype for a small and simplified part of the system using docker-compose or
 Kubernetes.
-This part should enable frequent travellers to bypass the regular checkout flow and reserve a hotel
+This part should enable frequent travelers to bypass the regular checkout flow and reserve a hotel
 room using available "bonus points" when they have an account in the system. There are no given
-API or payload specs and you are asked to come up with your own. In addition, you decide how the
+API or payload specs and you are asked to come up with your own. Besides, you decide how the
 communication between services should work.
 
   
@@ -65,17 +65,17 @@ The project implements the Micro services Architecture, and it has **three** mai
  - Business Logic Service: 
    -
    This is the core of the business, it consists of three components (plugins).
-   - Traveller Component: used for creating new travellers, and also update specific traveller *bonusPoints*
+   - Traveler Component: used for creating new travelers, and also update specific traveler *bonusPoints*
    - Room Component: Used for creating new rooms.
-   - Booking Component: (TASK REQUIREMENT) This compnent has the main login for making reservations and cancelling them.
+   - Booking Component: (TASK REQUIREMENT) This component has the main login for making reservations and canceling them.
   - Monitoring Service
     -
     This Service is used for two main purposes: 
-     - Audit Trail and monitor every action taken regarding room reservations and cacellation.
-     - Sending Emails with reservation detailed info. (whether a one was made or cancelled)
+     - Audit Trail and monitor every action taken regarding room reservations and cancellation.
+     - Sending Emails with reservation detailed info. (whether a one was made or canceled)
     
     Some might argue that every service should has its logging and monitoring service or database, but i preferred to implement the *[Log Aggregation](https://microservices.io/patterns/observability/application-logging.html)* design pattern. This is the idea behind AWS CloudWatch.
- - Api Gateway Service
+ - API Gateway Service
    -
    This is the public Service (TASK REQUIREMENT) and it is used to communicate with the BusinessLogic service.
    Authentication and Authorization (AS MENTIONED IN THE TASK) occurs here.
@@ -127,9 +127,9 @@ Configure the port by changing `services.gateway.ports` in __docker-compose.yml_
 
 ## Testing
 
-### Configure Api Keys.
+### Configure API Keys.
 
-When testing the Api, every call requires an api key. Public Api Key for public endpoints, and Private Api Key for the restricted ones.
+When testing the API, every call requires an api key. Public Api Key for public endpoints, and Private Api Key for the restricted ones.
 
 When importing postman collection for testing (Section Below). provide these keys: 
 
