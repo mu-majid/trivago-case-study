@@ -161,13 +161,13 @@ Provide variables for the collection:
 
 Then right click on the `Private Calls` folder, and write the following in the Authorization tab
 
-![Alt text](images/import-collection-5.png?raw=true "Image 6")
+![Alt text](images/import-collection-6.png?raw=true "Image 6")
 
-![Alt text](images/import-collection-5.png?raw=true "Image 7")
+![Alt text](images/import-collection-7.png?raw=true "Image 7")
 
 And the sane for the `Public Folder`:
 
-![Alt text](images/import-collection-5.png?raw=true "Image 8")
+![Alt text](images/import-collection-8.png?raw=true "Image 8")
 
   
   
