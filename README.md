@@ -182,16 +182,20 @@ And the sane for the `Public Folder`:
 These are the flow charts for the basic POC functionalities : 
 
  - Public Authentication: 
-![Alt text](images/public-auth.png?raw=true "Image 9")
+
+    ![Alt text](images/public-auth.png?raw=true "Image 9")
 
  - Private Authentication: 
-![Alt text](images/private-auth.png?raw=true "Image 10")
+    
+    ![Alt text](images/private-auth.png?raw=true "Image 10")
 
 
  - Making Reservation: 
-![Alt text](images/make-reservation.png?raw=true "Image 11")
+    
+    ![Alt text](images/make-reservation.png?raw=true "Image 11")
 
  - Cancel Reservation: 
-![Alt text](images/cancel-reservation.png?raw=true "Image 11")
+    
+    ![Alt text](images/cancel-reservation.png?raw=true "Image 11")
 
   
