@@ -50,10 +50,17 @@ const connectToDb = async (connectionStr, options) => {
 
   try {
     await Traveller.insertMany(travellers);
-    await Room.insertMany(rooms);
   }
   catch (error) {
-    console.log('Data Already Seeded.');
+    console.log('Ttaveller Data Already Seeded.')
+  }
+
+  try {
+    await Room.insertMany(rooms);
+    
+  } catch (error) {
+    console.log('Room Data Already Seeded.')
+    
   }
 
 }
