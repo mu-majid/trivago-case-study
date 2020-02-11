@@ -6,9 +6,9 @@ services:
     build:
       context: ./database
 
-    volumes:
-      - mongodata:/database/db
-      - mongoconfig:/database/configdb
+    # volumes:
+    #   - mongodata:/data/db
+    #   - mongoconfig:/data/configdb
     ports:
       - "27017:27017"
 
@@ -26,6 +26,8 @@ services:
       - BUSINESS_KEY=businesskey
     volumes:
       - ./MonitoringService:/usr/src/app
+      - /usr/src/app/node_modules
+
 
   business:
     build: 
@@ -47,6 +49,7 @@ services:
       - PRIVATE_ACCESS_KEY=private-api-secret
     volumes:
       - ./BusinessLogic:/usr/src/app
+      - /usr/src/app/node_modules
 
   gateway:
     build: 
@@ -67,11 +70,12 @@ services:
       - "8080:8080"
     volumes:
       - ./ApiGateWay:/usr/src/app
+      - /usr/src/app/node_modules
 
 
-volumes:
-  mongodata:
-    driver: local
-  mongoconfig:
-    driver: local
+# volumes:
+#   mongodata:
+#     driver: local
+#   mongoconfig:
+#     driver: local
 

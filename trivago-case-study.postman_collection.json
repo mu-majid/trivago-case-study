@@ -25,7 +25,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"roomName\": \"Dev Complete\",\n  \"requiredPoints\": 500,\n  \"availableAmount\": \"4\",\n  \"userId\" : \"123\"\n}",
+									"raw": "{\n  \"roomName\": \"Dev Complete\",\n  \"requiredPoints\": 500,\n  \"availableAmount\": \"4\",\n  \"userId\" : \"111\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -61,7 +61,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"userId\": \"123\",\n\t\"bonuspoints\": 250\n}",
+									"raw": "{\n\t\"userId\": \"111\",\n\t\"bonusPoints\": 250\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -69,7 +69,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{ApiGateWayUrl}}/api/travellers/sdf/points",
+									"raw": "http://{{ApiGateWayUrl}}/api/travellers/KeyOne/points",
 									"protocol": "http",
 									"host": [
 										"{{ApiGateWayUrl}}"
@@ -77,7 +77,7 @@
 									"path": [
 										"api",
 										"travellers",
-										"sdf",
+										"KeyOne",
 										"points"
 									]
 								},
@@ -149,7 +149,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"roomKey\": \"f8580126-f2fd-4dec-8c49-beb136bd9db0\",\n\t\"travellerKey\": \"15b8e747-1d76-411f-a5bd-6054919105f8\",\n\t\"email\": \"devcomplete@gmail.com\"\n}",
+									"raw": "{\n\t\"roomKey\": \"RoomOne\",\n\t\"travellerKey\": \"KeyThree\",\n\t\"email\": \"test3@test.com\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -185,7 +185,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n\t\"email\": \"devcomplete@gmail.com\"\n}",
+									"raw": "{\n\t\"email\": \"test3@test.com\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -193,7 +193,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{ApiGateWayUrl}}/api/bookings/6556/cancel",
+									"raw": "http://{{ApiGateWayUrl}}/api/bookings/020c6249-913b-40e6-8340-bb212028d446/cancel",
 									"protocol": "http",
 									"host": [
 										"{{ApiGateWayUrl}}"
@@ -201,7 +201,7 @@
 									"path": [
 										"api",
 										"bookings",
-										"6556",
+										"020c6249-913b-40e6-8340-bb212028d446",
 										"cancel"
 									]
 								},
@@ -213,9 +213,33 @@
 							"name": "Create Traveller (Public)",
 							"request": {
 								"method": "POST",
-								"header": [],
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"new@traveller.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
 								"url": {
-									"raw": ""
+									"raw": "http://{{ApiGateWayUrl}}/api/travellers",
+									"protocol": "http",
+									"host": [
+										"{{ApiGateWayUrl}}"
+									],
+									"path": [
+										"api",
+										"travellers"
+									]
 								},
 								"description": "Create Traveller. Public (to mimic traveller registeration).\n\nThe email attribute is required in the body, and also you can send name"
 							},
@@ -305,19 +329,19 @@
 	],
 	"variable": [
 		{
-			"id": "2184dfed-b527-4f0e-8eef-661c6715a118",
+			"id": "ac961a13-4b07-4973-8767-be0fa056dae9",
 			"key": "ApiGateWayUrl",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "127ed585-7ac8-4b08-b794-eca2c168f458",
+			"id": "5c412fb9-7b36-4a96-963f-a17700173add",
 			"key": "public-api-secret",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "9295ec74-42c0-4187-a9a5-d1b4eab6bab4",
+			"id": "a8e99be8-08a7-459e-a40d-3cc936c62ece",
 			"key": "private-api-secret",
 			"value": "",
 			"type": "string"
