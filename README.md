@@ -29,15 +29,13 @@ Sample microservice description.
 
 -  [Quick Start](#quick-start)
 
--  [Configure JWT Verification Key](#configure-jwt-verification-key)
 
 -  [Run Docker](#run-docker)
 
 -  [Testing](#testing)
 
--  [API](#api)
+-  [Flow Charts](#flow-charts)
 
--  [Acknowledgements](#acknowledgements)
 
   
   
@@ -106,11 +104,6 @@ Make sure the JWT Verification Key URL is configured, then you can run the serve
 
   
 
-### Configure JWT Verification Key
-
-Update __application.yml__. Set `auth.jwt.publicKeyUrl` to the URL to fetch the JWT verification key. The application will not start if it can't set the verification key for the JWTConverter.
-  
-
 ### Run Docker
 
   Change directory to the project's root (where `docker-compose.yml` is ) and run the following command which will build the images if the images **do not exist** and starts the containers.
@@ -134,7 +127,19 @@ Configure the port by changing `services.gateway.ports` in __docker-compose.yml_
 
 ## Testing
 
-An alternative way to test your API, you can use the Postman collection that contains sample requests. You can find a Postman collection in this project. To import this collection, do the following.
+### Configure Api Keys.
+
+When testing the Api, every call requires an api key. Public Api Key for public endpoints, and Private Api Key for the restricted ones.
+
+When importing postman collection for testing (Section Below). provide these keys: 
+
+```
+public-api-secret: public-api-secret
+private-api-secret: private-api-secret
+```
+  
+
+The Postman collection that contains sample requests. You can find a Postman collection in this project. To import this collection, do the following.
 
 Click on the import button:
 
@@ -159,7 +164,7 @@ Provide variables for the collection:
 
 ![Alt text](images/import-collection-5.png?raw=true "Image 5")
 
-Then right click on the `Private Calls` folder, and write the following in the Authorization tab
+Then right-click on the `Private Calls` folder, and write the following in the Authorization tab
 
 ![Alt text](images/import-collection-6.png?raw=true "Image 6")
 
@@ -172,12 +177,21 @@ And the sane for the `Public Folder`:
   
   
 
-## API
+## Flow Charts
 
-TODO: API Reference with examples, or a link to a wiki or other documentation source.
+These are the flow charts for the basic POC functionalities : 
+
+ - Public Authentication: 
+![Alt text](images/public-auth.png?raw=true "Image 9")
+
+ - Private Authentication: 
+![Alt text](images/private-auth.png?raw=true "Image 10")
+
+
+ - Making Reservation: 
+![Alt text](images/make-reservation.png?raw=true "Image 11")
+
+ - Cancel Reservation: 
+![Alt text](images/cancel-reservation.png?raw=true "Image 11")
 
   
-
-## Acknowledgements
-
-TODO: Show folks some love.

@@ -1,5 +1,7 @@
 const request = require('request-promise-native');
 const Log = require('../models/Log');
+const User = require('../models/User');
+
 const { services } = require('../../../config/config');
 
 const parseError = function (error) {
@@ -186,6 +188,13 @@ async function createTraveller (req, res) {
       response: createdTraveller,
       userId: req.headers.userId,
       payload: req.body 
+    });
+
+    await User.create({ 
+      email: createdTraveller.email, 
+      userId: createdTraveller.travellerKey, 
+      role: roles.CUSTOMER,
+      name: createdTraveller.name
     });
 
     return res.status(200).send(createdTraveller);
