@@ -340,7 +340,7 @@ Right click on the imported collection click `Edit` to set variables for the col
 
 ![Alt text](images/import-collection-4.png?raw=true "Image 4")
 
-Provide variables for the collection:
+Provide variables for the collection: (Change these variables when you want test different tokens)
 
 ![Alt text](images/import-collection-5.png?raw=true "Image 5")
 
