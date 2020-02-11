@@ -23,8 +23,6 @@ Sample microservice description.
 
 -  [Requirements](#requirements)
 
--  [EGO](#ego)
-
 -  [Local](#local)
 
 -  [Docker](#docker)
@@ -32,8 +30,6 @@ Sample microservice description.
 -  [Quick Start](#quick-start)
 
 -  [Configure JWT Verification Key](#configure-jwt-verification-key)
-
--  [Run Local](#run-local)
 
 -  [Run Docker](#run-docker)
 
@@ -87,42 +83,19 @@ The project implements the Micro services Architecture, and it has **three** mai
    Authentication and Authorization (AS MENTIONED IN THE TASK) occurs here.
 
 ![Alt text](images/Arch.png?raw=true "Architecture")
-
-
-
-  
   
 
 ## Requirements
 
 
-
-  
-  
-
-### EGO
-
-A running instance of [EGO](https://github.com/overture-stack/ego/) is required to generate the Authorization tokens and to provide the verification key.
-
-  
-
-[EGO](https://github.com/overture-stack/ego/) can be cloned and run locally if no public server is available.
-
-  
-  
-
 ### Local
-
-*  [Java 8 SDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-
-*  [Maven](https://maven.apache.org/download.cgi)
-
-  
-  
+*  NodeJS v12.14.0
+*  MongoDB
+* Npm v6.13.4
 
 ### Docker
-
-*  [Docker](https://www.docker.com/get-docker)
+*  Docker version 19.03.2
+*  docker-compose version 1.21.0
 
   
   
@@ -136,45 +109,11 @@ Make sure the JWT Verification Key URL is configured, then you can run the serve
 ### Configure JWT Verification Key
 
 Update __application.yml__. Set `auth.jwt.publicKeyUrl` to the URL to fetch the JWT verification key. The application will not start if it can't set the verification key for the JWTConverter.
-
-  
-
-The default value in the __application.yml__ file is set to connect to EGO running locally on its default port `8081`.
-
-  
-
-### Run Local
-
-```bash
-
-$ mvn spring-boot:run
-
-```
-
-  
-
-Application will run by default on port `1234`
-
-  
-
-Configure the port by changing `server.port` in __application.yml__
-
-  
   
 
 ### Run Docker
 
-  
-
-First build the image:
-
-```bash
-
-$ docker-compose build
-
-```
-
-  
+  Change directory to the project's root (where `docker-compose.yml` is ) and run the following command which will build the images if the images **do not exist** and starts the containers.
 
 When ready, run it:
 
@@ -184,20 +123,51 @@ $ docker-compose up
 
 ```
 
-  
-
-Application will run by default on port `1234`
+Application (ApiGateway Public Service) will run by default on port `8080`
 
   
 
-Configure the port by changing `services.api.ports` in __docker-compose.yml__. Port 1234 was used by default so the value is easy to identify and change in the configuration file.
+Configure the port by changing `services.gateway.ports` in __docker-compose.yml__. Port 8080 was used by default so the value is easy to identify and change in the configuration file.
 
   
   
 
 ## Testing
 
-TODO: Additional instructions for testing the application.
+An alternative way to test your API, you can use the Postman collection that contains sample requests. You can find a Postman collection in this project. To import this collection, do the following.
+
+Click on the import button:
+
+![Alt text](images/import-collection-1.png?raw=true "Image 1")
+
+
+Click on the "Choose Files":
+
+![Alt text](images/import-collection-2.png?raw=true "Image 2")
+
+
+Select a file to import:
+
+![Alt text](images/import-collection-3.png?raw=true "Image 3")
+
+
+Right click on the imported collection click `Edit` to set variables for the collection:
+
+![Alt text](images/import-collection-4.png?raw=true "Image 4")
+
+Provide variables for the collection:
+
+![Alt text](images/import-collection-5.png?raw=true "Image 5")
+
+Then right click on the `Private Calls` folder, and write the following in the Authorization tab
+
+![Alt text](images/import-collection-5.png?raw=true "Image 6")
+
+![Alt text](images/import-collection-5.png?raw=true "Image 7")
+
+And the sane for the `Public Folder`:
+
+![Alt text](images/import-collection-5.png?raw=true "Image 8")
 
   
   

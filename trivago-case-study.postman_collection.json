@@ -1,0 +1,327 @@
+{
+	"info": {
+		"_postman_id": "d29fa5df-c7d1-401a-951f-e22ce1f1ba85",
+		"name": "trivago-case-study",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Api Gateway Requests (Public Service)",
+			"item": [
+				{
+					"name": "Private Calls",
+					"item": [
+						{
+							"name": "Create Room (Private)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"roomName\": \"Dev Complete\",\n  \"requiredPoints\": 500,\n  \"availableAmount\": \"4\",\n  \"userId\" : \"123\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{ApiGateWayUrl}}/api/rooms",
+									"protocol": "http",
+									"host": [
+										"{{ApiGateWayUrl}}"
+									],
+									"path": [
+										"api",
+										"rooms"
+									]
+								},
+								"description": "This request is for creating rooms, so it is restricted only to ADMIN role. (you should send (userId or email) in body corresponding to ADMIN user.)\n\nroomName, availableAmount, and requiredPoints attributes in the request body are required, as well as userId or email."
+							},
+							"response": []
+						},
+						{
+							"name": "Update Traveller BonusPoints (Private)",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"userId\": \"123\",\n\t\"bonuspoints\": 250\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{ApiGateWayUrl}}/api/travellers/sdf/points",
+									"protocol": "http",
+									"host": [
+										"{{ApiGateWayUrl}}"
+									],
+									"path": [
+										"api",
+										"travellers",
+										"sdf",
+										"points"
+									]
+								},
+								"description": "This is a private route, that is used to update existing traveller bonus points.\n\nRequired in the request Body are userId (ADMIN user) (or his email).\n and also the bonisPoints attribute that represent new value.\n \nAlso traveller key is passed as a param."
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "apikey",
+						"apikey": [
+							{
+								"key": "value",
+								"value": "api_key {{private-api-secret}}",
+								"type": "string"
+							},
+							{
+								"key": "key",
+								"value": "authorization",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ac7a639d-42b9-43c8-b3fb-43512ee4de76",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "65174397-69bf-4e42-92ac-4d44a0a3cf8d",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Public Calls",
+					"item": [
+						{
+							"name": "Make Reservation (Public)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"roomKey\": \"f8580126-f2fd-4dec-8c49-beb136bd9db0\",\n\t\"travellerKey\": \"15b8e747-1d76-411f-a5bd-6054919105f8\",\n\t\"email\": \"devcomplete@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{ApiGateWayUrl}}/api/bookings",
+									"protocol": "http",
+									"host": [
+										"{{ApiGateWayUrl}}"
+									],
+									"path": [
+										"api",
+										"bookings"
+									]
+								},
+								"description": "This is a public route, that requires public-api-secret to be present in the authorization header.\n\nAnd the Body must contain roomKey and travellerKey, and userId or email."
+							},
+							"response": []
+						},
+						{
+							"name": "Cancel Reservation (Public)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"email\": \"devcomplete@gmail.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{ApiGateWayUrl}}/api/bookings/6556/cancel",
+									"protocol": "http",
+									"host": [
+										"{{ApiGateWayUrl}}"
+									],
+									"path": [
+										"api",
+										"bookings",
+										"6556",
+										"cancel"
+									]
+								},
+								"description": "Cancel a reservation, made by you. [ YOU (userId=travellerKey) CAN ONLY CANCEL IF YOU MADE THE RESERVATION].\n\nBody must contain userId or email, and Params must include bookingKey to cancel."
+							},
+							"response": []
+						},
+						{
+							"name": "Create Traveller (Public)",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": ""
+								},
+								"description": "Create Traveller. Public (to mimic traveller registeration).\n\nThe email attribute is required in the body, and also you can send name"
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "apikey",
+						"apikey": [
+							{
+								"key": "value",
+								"value": "api_key {{public-api-secret}}",
+								"type": "string"
+							},
+							{
+								"key": "key",
+								"value": "authorization",
+								"type": "string"
+							}
+						]
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "331a9861-8a75-44e5-989a-e26ef2d62193",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "63ce1bf1-d59e-4ae5-8f81-c311f8d52292",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"auth": {
+				"type": "apikey",
+				"apikey": [
+					{
+						"key": "value",
+						"value": "api_key public-api-secret",
+						"type": "string"
+					},
+					{
+						"key": "key",
+						"value": "authorization",
+						"type": "string"
+					}
+				]
+			},
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "5f89923f-8b3b-4125-a6de-ed686abc2a3a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "0c03a6aa-ca23-4ed6-8bd7-46360fd55b42",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "2184dfed-b527-4f0e-8eef-661c6715a118",
+			"key": "ApiGateWayUrl",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "127ed585-7ac8-4b08-b794-eca2c168f458",
+			"key": "public-api-secret",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "9295ec74-42c0-4187-a9a5-d1b4eab6bab4",
+			"key": "private-api-secret",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
