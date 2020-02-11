@@ -81,7 +81,79 @@ The project implements the Micro services Architecture, and it has **three** mai
    Authentication and Authorization (AS MENTIONED IN THE TASK) occurs here.
 
 ![Alt text](images/Arch.png?raw=true "Architecture")
-  
+
+## Database Models: 
+
+Database Used Is MongoDB.
+
+Each service has its own database (following microservices architecture), and the following are database entities per service:
+
+* Business Logic Service:
+  - 
+  - it has three different entities :
+
+	Booking entity
+	``` 
+	bookingKey: {type:  String, required:  true },
+	travellerKey: { type:  String, required:  true },
+	roomKey: { type:  String, required:  true },
+	status: { type:  String, enum: ['RESERVED', 'PENDING_APPROVAL', 'CANCELLED'] },
+	active: { type:  Boolean, default:  true }
+	```
+	Room entity
+	``` 
+	roomName: { type:  String, required:  true },
+	roomKey: { type:  String, required:  true },
+	requiredPoints: { type:  Number, default:  0 },
+	availableAmount: { type:  Number, default:  1 }, // available rooms
+	```
+	Traveller entity
+	``` 
+	email: { type:  String, required:  true, unique:  true },
+	name: { type:  String },
+	travellerKey: { type:  String, required:  true },
+	bonusPoints: { type:  Number, default:  0 }
+	```
+ * Monitor Service
+   -
+   - It has only one model
+	Audit entity
+		```
+		userId: { type:  String, required:  true },
+		resource: { type:  String, required:  true },
+		resourceId: { type:  String, required:  true },
+		action: { type:  String, required:  true },
+		data:{ type:  Schema.Types.Mixed },
+		status: { type:  String, enum: ['SUCCESS', 'ERROR'] }
+		```
+
+ * API GateWay Service
+   -
+   - It has three models
+	User entity
+		```
+		userId: { type:  String, required:  true },
+		role: { type:  String, required:  true, enum: ['CUSTOMER', 'ADMIN'] },
+		email: { type:  String },
+		name: { type:  String }
+		```
+		
+		Log entity
+		```
+		userId: { type:  Schema.Types.Mixed },
+		method: { type:  String },
+		status: { type:  String },
+		path: { type:  String },
+		statusCode: { type:  Number },
+		response: { type:  Schema.Types.Mixed },
+		payload: { type:  Schema.Types.Mixed }
+		```
+		
+		Consumer entity
+		```
+		api_key: { type:  String, required:  true },
+		type: { type:  String, required:  true, enum: ['public', 'private'] },
+		```
 
 ## Requirements
 
