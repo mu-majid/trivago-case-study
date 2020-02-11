@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  TestApiGW:
+  ApiGWJob:
     docker:
       # specify the version you desire here
       - image: circleci/node:12
@@ -17,3 +17,25 @@ jobs:
       - run: cd ApiGateWay
       - run: npm install
       - run: npm run test-cov
+
+  BusinessServiceJob:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:12
+      - image: circleci/mongo:3.7
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - run: cd ApiGateWay
+      - run: npm install
+      - run: npm run test-cov
+
+
+workflows:
+  version: 2
+  one_and_two:
+    jobs:
+      - ApiGWJob
+      - BusinessServiceJob

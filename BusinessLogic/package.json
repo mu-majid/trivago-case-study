@@ -6,8 +6,13 @@
   "directories": {
     "doc": "docs"
   },
+  "nyc": {
+    "include": "src",
+    "exclude": ["src/api/Room", "src/api/Traveller"]
+  },
   "scripts": {
     "test": "export NODE_ENV=testing && mocha 'src/**/**.spec.js'",
+    "test-cov": "export NODE_ENV=testing && nyc mocha --exit 'src/**/**.spec.js'",
     "start": "node src/server.js"
   },
   "keywords": [],
@@ -20,6 +25,7 @@
     "mocha": "^7.0.1",
     "mongoose": "^5.8.11",
     "mongoose-unique-validator": "^2.0.3",
+    "nyc": "^15.0.0",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.8",
     "sinon": "^8.1.1",
