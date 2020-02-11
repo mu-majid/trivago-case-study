@@ -364,17 +364,6 @@ describe('publicAuth Middleware Unit Test', () => {
       });
     });
 
-    it('Should create traveller.', async () => {
-      return requestTest(app).post('/api/travellers')
-      .set('Accept', 'application/json')
-      .set('authorization', 'api_key public-secret')
-      .send({email: 'traveller@guest.com'})
-      .expect(200)
-      .then( response => {
-        expect(response.body).to.deep.equal({done: true});
-      });
-    });
-
 
   });
 
