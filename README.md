@@ -4,16 +4,15 @@
 
 <p  align="center">
 
-Sample microservice description.
+Further Enhancements : 
+ - Use Linter such as eslint.
+ - Use a better logging tool such winston.
+ - API documentation with Swagger (OpenAPI 3.0).
 
 </p>
 
-  
-  
 
 ## Table of Contents
-
-  
 
 -  [Table of Contents](#table-of-contents)
 
@@ -296,7 +295,7 @@ $ docker-compose up
 
 ```
 
-Application (ApiGateway Public Service) will run by default on port `8080`
+Application (ApiGateway Public Service) will run by default on port `8080`, and is accessible from `http://localhost:8080`
 
   
 
@@ -344,7 +343,7 @@ Provide variables for the collection: (Change these variables when you want test
 
 ![Alt text](images/import-collection-5.png?raw=true "Image 5")
 
-Then right click on the `Private Calls` folder, and write the following in the Authorization tab
+Then right-click on the `Private Calls` folder, and write the following in the Authorization tab
 
 ![Alt text](images/import-collection-5.png?raw=true "Image 6")
 
