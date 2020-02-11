@@ -7,12 +7,14 @@ const { server, database } = require('./config/config');
 const apiController = require('./api/index');
 const authenticateService = require('./middleware/authenticateService');
 
-(async () => {
+const connectToDb = require('./seed');
 
-  await mongoose.connect(
-    `mongodb://${database.host}:${database.port}/${(process.env.NODE_ENV === 'testing') ? database.dbNameTesting : database.dbName }`,
-    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }
-  );
+(async () => {
+  const connectionString = `mongodb://${database.host}:${database.port}/${(process.env.NODE_ENV === 'testing') ? database.dbNameTesting : database.dbName }`;
+    
+  const options = { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false };
+
+  await connectToDb(connectionString, options);
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));

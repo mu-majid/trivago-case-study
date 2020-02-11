@@ -7,11 +7,10 @@ services:
       context: ./database
 
     volumes:
-      - mongodata:/data/db
-      - mongoconfig:/data/configdb
+      - mongodata:/database/db
+      - mongoconfig:/database/configdb
     ports:
       - "27017:27017"
-      - "28017:28017"
 
   monitoring:
     build: 

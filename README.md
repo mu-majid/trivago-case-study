@@ -172,9 +172,99 @@ Each service has its own database (following microservices architecture), and th
 
 ## Quick Start
 
-Make sure the JWT Verification Key URL is configured, then you can run the server in a docker container or on your local machine.
+TThe database of each service will be seeded when you start the application to make testing easier, and here is the data seeded for each service:
 
+  I had different ideas to seed the database ( with a container that whole purpose is to seed the database when we run `docker-compose up` , A route that you make a request to and db will be seeded, and the third option was to insert documents when each service connect to the database ).
+
+I chose the third option, so now when you start the app, each service will seed its data.
+
+* Business Service:
+``` javascript
+const  travellers  = [
+	{
+		email:  "test@test.com",
+		bonusPoints:  75,
+		travellerKey:  'KeyOne',
+		name: 'JohnDoe'
+	},
+	{
+		email:  "test2@test.com",
+		bonusPoints:  150,
+		travellerKey:  'KeyTwo',
+		name: 'JohnDoe2'
+	},
+	{
+		email:  "test3@test.com",
+		bonusPoints:  35,
+		travellerKey:  'KeyThree',
+		name: 'JohnDoe3'
+	}
+];
+
+const  rooms  = [
+	{
+		roomName:  "Suite C2",
+		requiredPoints:  250,
+		availableAmount:  2,
+		roomKey:  'RoomOne'
+	},
+	{
+		roomName:  "Single Room C2",
+		requiredPoints:  100,
+		availableAmount:  1,
+		roomKey:  'RoomTwo'
+	},
+	{
+		roomName:  "Single Room C3",
+		requiredPoints:  100,
+		availableAmount:  5,
+		roomKey:  'RoomThree'
+	}
+];
+
+```
   
+
+* API GateWay:
+```javascript
+const  users  = [
+	{
+		email:  "admin@admin.com",
+		userId:  '111',
+		role:  'ADMIN',
+		name:  'John Admin'
+	},
+	{
+		email:  "test@test.com",
+		role:  'CUSTOMER',
+		userId:  'KeyOne',
+		name: 'JohnDoe'
+	},
+	{
+		email:  "test2@test.com",
+		role:  'CUSTOMER',
+		userId:  'KeyTwo',
+		name: 'JohnDoe2'
+	},
+	{
+		email:  "test3@test.com",
+		role:  'CUSTOMER',
+		userId:  'KeyThree',
+		name: 'JohnDoe3'
+	}
+];
+
+const  consumers  = [
+	{
+		api_key:  "public-api-secret",
+		type:  'public'
+	},
+	{
+		api_key:  "private-api-secret",
+		type:  'private'
+	}
+];
+```
 
 ### Run Docker
 

@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose')
 
 const ConsumerSchema = new Schema({
-  api_key: { type: String, required: true },
+  api_key: { type: String, required: true, unique: true },
   type: { type: String, required: true, enum: ['public', 'private'] },
 
 }, { timestamps: true });
