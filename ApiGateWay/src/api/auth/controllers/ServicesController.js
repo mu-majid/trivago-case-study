@@ -1,8 +1,12 @@
 const request = require('request-promise-native');
+const { createHmac } = require('crypto');
 const Log = require('../models/Log');
+const Consumer = require('../models/Consumer');
+
+const uuid = require('uuid');
 const User = require('../models/User');
 
-const { services } = require('../../../config/config');
+const { services, publicKeySecret, roles } = require('../../../config/config');
 
 const parseError = function (error) {
   let e = error;
@@ -180,7 +184,7 @@ async function createTraveller (req, res) {
 
   try {
     const createdTraveller = await request.post(options);
-
+    
     await Log.create({ path,
       statusCode: 200,
       method: 'POST',
@@ -189,14 +193,23 @@ async function createTraveller (req, res) {
       userId: req.headers.userId,
       payload: req.body 
     });
+    const token = uuid.v4();
 
     await User.create({ 
-      email: createdTraveller.email, 
-      userId: createdTraveller.travellerKey, 
+      email: createdTraveller.data.email, 
+      userId: createdTraveller.data.travellerKey, 
       role: roles.CUSTOMER,
-      name: createdTraveller.name
+      name: createdTraveller.data.name,
+      token
     });
 
+    const userPublicToken = createHmac('SHA256', publicKeySecret).update(token).digest('base64');
+    await Consumer.create({
+      api_key: userPublicToken,
+      type: 'public'
+    });
+
+    createdTraveller.data.token = userPublicToken;
     return res.status(200).send(createdTraveller);
   }
   catch (error) {

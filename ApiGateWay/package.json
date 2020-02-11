@@ -5,7 +5,7 @@
   "main": "index.js",
   "nyc": {
     "include": "src",
-    "exclude": "src/api/auth/controllers" 
+    "exclude": "src/api/auth/controllers"
   },
   "scripts": {
     "test": "export NODE_ENV=testing && mocha --exit 'src/**/**.spec.js'",

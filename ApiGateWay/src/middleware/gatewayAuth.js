@@ -6,20 +6,21 @@ async function gateWayAuth (req, res, next) {
     return res.status(401).send({ message: 'No authorization headers.' });
   }
 
-  const apiKey = req.headers.authorization.split(' ');
+  const authHeader = req.headers.authorization.split(' ');
 
-  if (apiKey.length != 2) {
+  if (authHeader.length != 2) {
     return res.status(401).send({ message: 'Malformed Api Key.' });
   }
 
-  const privateKey = apiKey[1];
-  const consumer = await Consumer.findOne({ api_key: privateKey }).lean().exec();
+  const consumer_token = authHeader[1];
+  const consumer = await Consumer.findOne({ api_key: consumer_token }).lean().exec();
   
   if (!consumer) {
     return res.status(401).send({ message: 'Consumer Api Key Does Not Exist.' });
   }
 
   req.headers.consumer_type = consumer.type;
+  req.headers.consumer_token = consumer_token;
   req.headers.api_key = access_key;
   return next();
 }

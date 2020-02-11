@@ -22,8 +22,6 @@ module.exports = {
       name: 'api_gateway',
       api_key: process.env.API_GATEWAY_KEY || 'apigateway'
     }
-  ],
-  publicAccessPolicyKey: process.env.PUBLIC_ACCESS_KEY || 'public-api-secret',
-  privateAccessPolicyKey: process.env.PRIVATE_ACCESS_KEY || 'private-api-secret'
+  ]
 
 }
