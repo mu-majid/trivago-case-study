@@ -86,7 +86,7 @@ The project implements the Micro services Architecture, and it has **three** mai
    This is the public Service (TASK REQUIREMENT) and it is used to communicate with the BusinessLogic service.
    Authentication and Authorization (AS MENTIONED IN THE TASK) occurs here.
 
-![Alt text](images/Architectue.svg?raw=true "Architecture")
+![Alt text](images/Arch.svg?raw=true "Architecture")
 
 
 
