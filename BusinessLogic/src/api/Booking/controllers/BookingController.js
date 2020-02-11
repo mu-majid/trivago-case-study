@@ -20,6 +20,12 @@ async function makeReservation (req, res) {
     const foundTraveller = await travellerService.findOne(travellerKey);
     const foundRoom = await roomService.findOne(roomKey);
 
+    if (foundTraveller.travellerKey !== requestingUser) {
+      return res.status(400).send({
+        message: 'Invalid Request, due to Data Mismatch.'
+      });
+    }
+
     if (!(foundRoom && foundTraveller)) {
       return res.status(404).send({ message: 
         `Could Not find ${foundRoom ? 'Traveller': (foundTraveller ? 'Room' : 'Either Room or Traveller ')} \

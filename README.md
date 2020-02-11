@@ -51,9 +51,9 @@ experienced engineers with strong knowledge in NodeJS and while other programmin
 were on the table, the team decided to proceed with Node only. It is your task to develop a
 containerized prototype for a small and simplified part of the system using docker-compose or
 Kubernetes.
-This part should enable frequent travelers to bypass the regular checkout flow and reserve a hotel
+This part should enable frequent travellers to bypass the regular checkout flow and reserve a hotel
 room using available "bonus points" when they have an account in the system. There are no given
-API or payload specs and you are asked to come up with your own. Besides, you decide how the
+API or payload specs and you are asked to come up with your own. In addition, you decide how the
 communication between services should work.
 
   
@@ -65,23 +65,23 @@ The project implements the Micro services Architecture, and it has **three** mai
  - Business Logic Service: 
    -
    This is the core of the business, it consists of three components (plugins).
-   - Traveler Component: used for creating new travelers, and also update specific traveler *bonusPoints*
+   - Traveller Component: used for creating new travellers, and also update specific traveller *bonusPoints*
    - Room Component: Used for creating new rooms.
-   - Booking Component: (TASK REQUIREMENT) This component has the main login for making reservations and canceling them.
+   - Booking Component: (TASK REQUIREMENT) This compnent has the main login for making reservations and cancelling them.
   - Monitoring Service
     -
     This Service is used for two main purposes: 
-     - Audit Trail and monitor every action taken regarding room reservations and cancellation.
-     - Sending Emails with reservation detailed info. (whether a one was made or canceled)
+     - Audit Trail and monitor every action taken regarding room reservations and cacellation.
+     - Sending Emails with reservation detailed info. (whether a one was made or cancelled)
     
     Some might argue that every service should has its logging and monitoring service or database, but i preferred to implement the *[Log Aggregation](https://microservices.io/patterns/observability/application-logging.html)* design pattern. This is the idea behind AWS CloudWatch.
- - API Gateway Service
+ - Api Gateway Service
    -
    This is the public Service (TASK REQUIREMENT) and it is used to communicate with the BusinessLogic service.
    Authentication and Authorization (AS MENTIONED IN THE TASK) occurs here.
 
 ![Alt text](images/Arch.png?raw=true "Architecture")
-
+  
 ## Database Models: 
 
 Database Used Is MongoDB.
@@ -154,25 +154,30 @@ Each service has its own database (following microservices architecture), and th
 		api_key: { type:  String, required:  true },
 		type: { type:  String, required:  true, enum: ['public', 'private'] },
 		```
-
 ## Requirements
 
+
+An internet connection of course.
 
 ### Local
 *  NodeJS v12.14.0
 *  MongoDB
-* Npm v6.13.4
+*  Npm v6.13.4
 
 ### Docker
 *  Docker version 19.03.2
 *  docker-compose version 1.21.0
 
-  
-  
-
+ 
 ## Quick Start
 
-TThe database of each service will be seeded when you start the application to make testing easier, and here is the data seeded for each service:
+When a traveller is created, a token id sent back in the response. This token with traveller email or his key (userId in req body) should be passed with each request a traveller issues.
+
+For the admin user there is only one user seeded (I have not added routes to create system users).
+
+Tokens for public and private users could be found in the seeded data snippets below.
+
+The database of each service will be seeded when you start the application to make testing easier, and here is the data seeded for each service:
 
   I had different ideas to seed the database ( with a container that whole purpose is to seed the database when we run `docker-compose up` , A route that you make a request to and db will be seeded, and the third option was to insert documents when each service connect to the database ).
 
@@ -229,42 +234,55 @@ const  rooms  = [
 ```javascript
 const  users  = [
 	{
-		email:  "admin@admin.com",
+		email:  "admin@admin.com", 
 		userId:  '111',
 		role:  'ADMIN',
-		name:  'John Admin'
+		name:  'John Admin',
+		token:  'private-token' // P/oa1XVdX0rkOQLNjNpAvv/2oCdZlC5fwzyaK/mvdPk=
 	},
 	{
 		email:  "test@test.com",
 		role:  'CUSTOMER',
 		userId:  'KeyOne',
-		name: 'JohnDoe'
+		name:  'JohnDoe',
+		token:  'public-token-1'  // MXFTroJt3r8037wCXq0wA+gWCTP1QoG884F5fdk39J4=
 	},
 	{
 		email:  "test2@test.com",
 		role:  'CUSTOMER',
 		userId:  'KeyTwo',
-		name: 'JohnDoe2'
+		name:  'JohnDoe2',
+		token:  'public-token-2'  // t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=
 	},
 	{
 		email:  "test3@test.com",
 		role:  'CUSTOMER',
 		userId:  'KeyThree',
-		name: 'JohnDoe3'
+		name:  'JohnDoe3',
+		token:  'public-token-3'  // vYSYLt1OzKvkWtmYuVUYmCRbSf20H4b/Gr1C1DzBmp8=
 	}
 ];
 
 const  consumers  = [
 	{
-		api_key:  "public-api-secret",
+		api_key:  "MXFTroJt3r8037wCXq0wA+gWCTP1QoG884F5fdk39J4=",
 		type:  'public'
 	},
 	{
-		api_key:  "private-api-secret",
+		api_key:  "t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=",
+		type:  'public'
+	},
+	{
+		api_key:  "vYSYLt1OzKvkWtmYuVUYmCRbSf20H4b/Gr1C1DzBmp8=",
+		type:  'public'
+	},
+	{
+		api_key:  "P/oa1XVdX0rkOQLNjNpAvv/2oCdZlC5fwzyaK/mvdPk=",
 		type:  'private'
 	}
 ];
 ```
+  
 
 ### Run Docker
 
@@ -289,9 +307,9 @@ Configure the port by changing `services.gateway.ports` in __docker-compose.yml_
 
 ## Testing
 
-### Configure API Keys.
+### Configure Api Keys.
 
-When testing the API, every call requires an api key. Public Api Key for public endpoints, and Private Api Key for the restricted ones.
+When testing the Api, every call requires an api key. Public Api Key for public endpoints, and Private Api Key for the restricted ones.
 
 When importing postman collection for testing (Section Below). provide these keys: 
 
@@ -326,38 +344,47 @@ Provide variables for the collection:
 
 ![Alt text](images/import-collection-5.png?raw=true "Image 5")
 
-Then right-click on the `Private Calls` folder, and write the following in the Authorization tab
+Then right click on the `Private Calls` folder, and write the following in the Authorization tab
 
-![Alt text](images/import-collection-6.png?raw=true "Image 6")
+![Alt text](images/import-collection-5.png?raw=true "Image 6")
 
-![Alt text](images/import-collection-7.png?raw=true "Image 7")
+![Alt text](images/import-collection-5.png?raw=true "Image 7")
 
 And the sane for the `Public Folder`:
 
-![Alt text](images/import-collection-8.png?raw=true "Image 8")
+![Alt text](images/import-collection-5.png?raw=true "Image 8")
 
   
   
+
 
 ## Flow Charts
 
-These are the flow charts for the basic POC functionalities : 
+  
 
- - Public Authentication: 
-
-    ![Alt text](images/public-auth.png?raw=true "Image 9")
-
- - Private Authentication: 
-    
-    ![Alt text](images/private-auth.png?raw=true "Image 10")
-
-
- - Making Reservation: 
-    
-    ![Alt text](images/make-reservation.png?raw=true "Image 11")
-
- - Cancel Reservation: 
-    
-    ![Alt text](images/cancel-reservation.png?raw=true "Image 11")
+These are the flow charts for the basic POC functionalities :
 
   
+
+- Public Authentication:
+
+![Alt text](images/public-auth.png?raw=true  "Image 9")
+
+  
+
+- Private Authentication:
+
+![Alt text](images/private-auth.png?raw=true  "Image 10")
+
+  
+  
+
+- Making Reservation:
+
+![Alt text](images/make-reservation.png?raw=true  "Image 11")
+
+  
+
+- Cancel Reservation:
+
+![Alt text](images/cancel-reservation.png?raw=true  "Image 11")

@@ -17,5 +17,7 @@ module.exports = {
   roles: {
     CUSTOMER: 'CUSTOMER',
     ADMIN: 'ADMIN'
-  }
+  },
+  publicKeySecret: 'used-to-hmac-users-tokens',
+  privateKeySecret: 'used-to-hmac-private-users-tokens'
 }

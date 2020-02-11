@@ -11,32 +11,57 @@ const {app} = require('../server');
 const Consumer = require('../api/auth/models/Consumer');
 const User = require('../api/auth/models/User');
 const { database } = require('../config/config');
-const users = [
-  {
-    email: "admin@admin.com",
-    userId: '111',
-    role: 'ADMIN',
-    name: 'John Doe'
-  },
-  {
-    email: "guest@guest.com",
-    userId: '222',
-    role: 'CUSTOMER',
-    name: 'Jane Doe'
-  }
+const  users  = [
+	{
+		email:  "admin@admin.com", // P/oa1XVdX0rkOQLNjNpAvv/2oCdZlC5fwzyaK/mvdPk=
+		userId:  '111',
+		role:  'ADMIN',
+    name:  'John Admin',
+    token: 'private-token'
+	},
+	{
+		email:  "test@test.com",
+		role:  'CUSTOMER',
+		userId:  'KeyOne',
+    name: 'JohnDoe',
+    token: 'public-token-1' // MXFTroJt3r8037wCXq0wA+gWCTP1QoG884F5fdk39J4=
+	},
+	{
+		email:  "test2@test.com",
+		role:  'CUSTOMER',
+		userId:  'KeyTwo',
+    name: 'JohnDoe2',
+    token: 'public-token-2' // t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=
+    
+	},
+	{
+		email:  "test3@test.com",
+		role:  'CUSTOMER',
+		userId:  'KeyThree',
+    name: 'JohnDoe3',
+    token: 'public-token-3' // vYSYLt1OzKvkWtmYuVUYmCRbSf20H4b/Gr1C1DzBmp8=
+    
+	}
 ];
 
-const consumers = [
-  {
-    api_key: "public-secret",
-    type: 'public'
+const  consumers  = [
+	{
+		api_key:  "MXFTroJt3r8037wCXq0wA+gWCTP1QoG884F5fdk39J4=",
+		type:  'public'
   },
   {
-    api_key: "private-secret",
-    type: 'private'
-  }
+		api_key:  "t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=",
+		type:  'public'
+  },
+  {
+		api_key:  "vYSYLt1OzKvkWtmYuVUYmCRbSf20H4b/Gr1C1DzBmp8=",
+		type:  'public'
+	},
+	{
+		api_key:  "P/oa1XVdX0rkOQLNjNpAvv/2oCdZlC5fwzyaK/mvdPk=",
+		type:  'private'
+	}
 ];
-
 
 before(async function ()  {
   await mongoose.connect(
@@ -123,7 +148,7 @@ describe('publicAuth Middleware Unit Test', () => {
     it('Should throw validation error', async () => {
       return requestTest(app).post('/api/bookings')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key public-secret')
+      .set('authorization', 'api_key t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=')
       .expect(422)
       .then( response => {
         expect(response.body.error).to.include(
@@ -132,33 +157,33 @@ describe('publicAuth Middleware Unit Test', () => {
       });
     });
 
-    it('Should get traveller from business service and insert him in api users collection', async () => {
-      return requestTest(app).post('/api/bookings')
-      .set('Accept', 'application/json')
-      .set('authorization', 'api_key public-secret')
-      .send({roomKey: 'rmk', travellerKey: 'trk', email: 'traveller@traveller.com'})
-      .expect(200)
-      .then( response => {
-        expect(response.body).deep.equal({ done: true });
-      });
-    });
-
     it('Should throw error, returned user from business is not the requesting user', async () => {
       return requestTest(app).post('/api/bookings')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key public-secret')
-      .send({roomKey: 'rmk', travellerKey: 'trk', email: 'hacker@traveller.com'})
+      .set('authorization', 'api_key t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=')
+      .send({roomKey: 'rmk', travellerKey: 'trk', email: 'test@test.com'})
       .expect(401)
       .then( response => {
         expect(response.body).deep.equal({ message: 'You are not allowed to execute this operation.' });
       });
     });
 
+    it('Should throw unauthorized error.', async () => {
+      return requestTest(app).post('/api/bookings')
+      .set('Accept', 'application/json')
+      .set('authorization', 'api_key t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=')
+      .send({roomKey: 'rmk', travellerKey: 'trk', email: 'test3@test.com'})
+      .expect(401)
+      .then( response => {
+        expect(response.body).to.deep.equal({"message": "You are not allowed to execute this operation."});
+      });
+    });
+
     it('Should create reservation.', async () => {
       return requestTest(app).post('/api/bookings')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key public-secret')
-      .send({roomKey: 'rmk', travellerKey: 'trk', email: 'admin@admin.com'})
+      .set('authorization', 'api_key t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=')
+      .send({roomKey: 'rmk', travellerKey: 'trk', email: 'test2@test.com'})
       .expect(200)
       .then( response => {
         expect(response.body).to.deep.equal({done: true});
@@ -205,7 +230,7 @@ describe('publicAuth Middleware Unit Test', () => {
     it('Should throw validation error', async () => {
       return requestTest(app).post('/api/bookings/1/cancel')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key public-secret')
+      .set('authorization', 'api_key t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=')
       .expect(422)
       .then( response => {
         expect(response.body.error).to.include(
@@ -217,8 +242,8 @@ describe('publicAuth Middleware Unit Test', () => {
     it('Should cancel reservation successfully. ', async () => {
       return requestTest(app).post('/api/bookings/1/cancel')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key public-secret')
-      .send({roomKey: 'rmk', travellerKey: 'trk', email: 'admin@admin.com'})
+      .set('authorization', 'api_key t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=')
+      .send({roomKey: 'rmk', travellerKey: 'trk', email: 'test2@test.com'})
       .expect(200)
       .then( response => {
         expect(response.body).to.deep.equal({done: true});
@@ -264,7 +289,7 @@ describe('publicAuth Middleware Unit Test', () => {
     it('Should throw  validation error', async () => {
       return requestTest(app).post('/api/rooms')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key public-secret')
+      .set('authorization', 'api_key t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=')
       .expect(422)
       .then( response => {
         expect(response.body.error).to.include(
@@ -276,7 +301,7 @@ describe('publicAuth Middleware Unit Test', () => {
     it('Should throw  validation error', async () => {
       return requestTest(app).post('/api/rooms')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key public-secret')
+      .set('authorization', 'api_key t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=')
       .send({roomKey: 'rmk', travellerKey: 'trk', email: 'admin@admin.com'})
       .expect(422)
       .then( response => {
@@ -288,29 +313,29 @@ describe('publicAuth Middleware Unit Test', () => {
     it('Should throw unauth error, because user accessing private route with public api key', async () => {
       return requestTest(app).post('/api/rooms')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key public-secret')
+      .set('authorization', 'api_key t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=')
       .send({roomName: 'rmk', requiredPoints: 200, availableAmount: 5, email: 'admin@admin.com'})
       .expect(401)
       .then( response => {
-        expect(response.body).to.deep.equal({ message: 'Unauthorized Action' });
+        expect(response.body).to.deep.equal({ message: "You are not allowed to execute this operation." });
       });
     });
 
     it('Should throw forbidden error, because REGULAR user is executing ADMIN operation.', async () => {
       return requestTest(app).post('/api/rooms')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key private-secret')
-      .send({roomName: 'rmk', requiredPoints: 200, availableAmount: 5, email: 'guest@guest.com'})
-      .expect(403)
+      .set('authorization', 'api_key P/oa1XVdX0rkOQLNjNpAvv/2oCdZlC5fwzyaK/mvdPk=')
+      .send({roomName: 'rmk', requiredPoints: 200, availableAmount: 5, email: 'test@test.com'})
+      .expect(401)
       .then( response => {
-        expect(response.body).to.deep.equal({ message: 'Forbidden Action' });
+        expect(response.body).to.deep.equal({ message: "You are not allowed to execute this operation." });
       });
     });
 
     it('Should throw forbidden error, because REGULAR user is executing ADMIN operation.', async () => {
       return requestTest(app).post('/api/rooms')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key private-secret')
+      .set('authorization', 'api_key P/oa1XVdX0rkOQLNjNpAvv/2oCdZlC5fwzyaK/mvdPk=')
       .send({roomName: 'rmk', requiredPoints: 200, availableAmount: 5, email: 'admin@admin.com'})
       .expect(200)
       .then( response => {
@@ -355,7 +380,7 @@ describe('publicAuth Middleware Unit Test', () => {
     it('Should throw validation error', async () => {
       return requestTest(app).post('/api/travellers')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key public-secret')
+      .set('authorization', 'api_key t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=')
       .expect(422)
       .then( response => {
         expect(response.body.error).to.include(
@@ -401,7 +426,7 @@ describe('publicAuth Middleware Unit Test', () => {
     it('Should throw validation error', async () => {
       return requestTest(app).put('/api/travellers/1/points')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key public-secret')
+      .set('authorization', 'api_key t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=')
       .expect(422)
       .then( response => {
         expect(response.body.error).to.include(
@@ -413,7 +438,7 @@ describe('publicAuth Middleware Unit Test', () => {
     it('Should throw validation error', async () => {
       return requestTest(app).put('/api/travellers/1/points')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key public-secret')
+      .set('authorization', 'api_key t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=')
       .send({email: 'traveller@guest.com'})
       .expect(422)
       .then( response => {        
@@ -424,7 +449,7 @@ describe('publicAuth Middleware Unit Test', () => {
     it('Should throw not found error, user not found', async () => {
       return requestTest(app).put('/api/travellers/1/points')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key public-secret')
+      .set('authorization', 'api_key t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=')
       .send({email: 'traveller@guest.com', bonusPoints: 50})
       .expect(404)
       .then( response => {    
@@ -435,29 +460,29 @@ describe('publicAuth Middleware Unit Test', () => {
     it('Should throw unauthorized action, user is admin but sent public key.', async () => {
       return requestTest(app).put('/api/travellers/1/points')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key public-secret')
+      .set('authorization', 'api_key t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=')
       .send({email: 'admin@admin.com', bonusPoints: 50})
       .expect(401)
       .then( response => {            
-        expect(response.body).to.deep.equal({ "message": "Unauthorized Action" });
+        expect(response.body).to.deep.equal({ "message": "You are not allowed to execute this operation." });
       });
     });
 
     it('Should throw forbidden error, user is not admin but sent private key.', async () => {
       return requestTest(app).put('/api/travellers/1/points')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key private-secret')
-      .send({email: 'guest@guest.com', bonusPoints: 50})
-      .expect(403)
+      .set('authorization', 'api_key P/oa1XVdX0rkOQLNjNpAvv/2oCdZlC5fwzyaK/mvdPk=')
+      .send({email: 'test@test.com', bonusPoints: 50})
+      .expect(401)
       .then( response => {            
-        expect(response.body).to.deep.equal({ "message": "Forbidden Action" });
+        expect(response.body).to.deep.equal({ "message": "You are not allowed to execute this operation." });
       });
     });
 
     it('Should update traveller points.', async () => {
       return requestTest(app).put('/api/travellers/1/points')
       .set('Accept', 'application/json')
-      .set('authorization', 'api_key private-secret')
+      .set('authorization', 'api_key P/oa1XVdX0rkOQLNjNpAvv/2oCdZlC5fwzyaK/mvdPk=')
       .send({email: 'admin@admin.com', bonusPoints: 50})
       .expect(200)
       .then( response => {          
