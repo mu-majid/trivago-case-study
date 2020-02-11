@@ -60,10 +60,17 @@ const connectToDb = async (connectionStr, options) => {
   
   try {
     await User.insertMany(users);
-    await Consumer.insertMany(consumers);
   }
   catch (error) {
-    console.log('Data Already Seeded.')
+    console.log('User Data Already Seeded.')
+  }
+
+  try {
+    await Consumer.insertMany(consumers);
+    
+  } catch (error) {
+    console.log('Consumer Data Already Seeded.')
+    
   }
 }
 
