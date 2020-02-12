@@ -160,7 +160,7 @@ async function createRoom (req, res) {
       payload: req.body 
     });
 
-    console.log(`Error while trying to create room ${req.body.name}:  ${e.message}`);
+    console.log(`Error while trying to create room ${req.body.roomName}:  ${e.message}`);
 
     return res.status(400).send({message: `Couldn\'t create room with error ${e.message}.`});
   }
@@ -276,10 +276,150 @@ async function updateTravellerPoints (req, res) {
   }
 }
 
+async function getTravelerBookings (req, res) {
+  const path = `/api/bookings`;
+  const options = {
+    url: `${services.business.url}${path}`,
+    headers: {
+      accept: 'application/json',
+      api_key: req.headers.api_key,
+      authorization: req.headers.authorization,
+      userId: req.headers.userId
+    },
+    json: true
+  };
+
+  try {
+    const bookings = await request.get(options);
+
+    await Log.create({ path,
+      statusCode: 200, 
+      method: 'GET', 
+      status: 'SUCCESS',
+      response: bookings, 
+      userId: req.headers.userId, 
+      payload: req.body 
+    });
+
+    return res.status(200).send(bookings);
+  }
+  catch (error) {
+    const e = parseError(error);
+
+    await Log.create({ path, 
+      statusCode: e.code, 
+      method: 'GET',
+      status: 'ERROR',
+      response: error.error, 
+      userId: req.headers.userId, 
+      payload: req.body 
+    });
+
+    console.log(`Error while trying to fetch traveller ${req.headers.userId} bookings. :  ${e.message}`);
+
+    return res.status(400).send({message: `Couldn\'t fetch traveller ${req.headers.userId} bookings error ${e.message}.`});
+  }
+}
+
+async function getRooms (req, res) {
+  
+  const path = `/api/rooms`;
+  const options = {
+    url: `${services.business.url}${path}`,
+    headers: {
+      accept: 'application/json',
+      api_key: req.headers.api_key,
+      authorization: req.headers.authorization,
+      userId: req.headers.userId
+    },
+    json: true
+  };
+
+  try {
+    const rooms = await request.get(options);
+
+    await Log.create({ path,
+      statusCode: 200, 
+      method: 'GET', 
+      status: 'SUCCESS',
+      response: rooms, 
+      userId: req.headers.userId, 
+      payload: req.body 
+    });
+
+    return res.status(200).send(rooms);
+  }
+  catch (error) {
+    const e = parseError(error);
+
+    await Log.create({ path, 
+      statusCode: e.code, 
+      method: 'GET',
+      status: 'ERROR',
+      response: error.error, 
+      userId: req.headers.userId, 
+      payload: req.body 
+    });
+
+    console.log(`Error while trying to get all rooms:  ${e.message}`);
+
+    return res.status(400).send({message: `Couldn\'t get all rooms with error ${e.message}.`});
+  }
+}
+
+async function getTraveller (req, res) {
+  const path = `/api/travellers/${req.params.travellerKey}`;
+  const options = {
+    url: `${services.business.url}${path}`,
+    headers: {
+      accept: 'application/json',
+      api_key: req.headers.api_key,
+      authorization: req.headers.authorization,
+      userId: req.headers.userId
+    },
+    json: true
+  };
+
+  try {
+    const traveller = await request.get(options);
+
+    await Log.create({ path,
+      statusCode: 200, 
+      method: 'GET', 
+      status: 'SUCCESS',
+      response: traveller, 
+      userId: req.headers.userId, 
+      payload: req.body 
+    });
+
+    return res.status(200).send(traveller);
+  }
+  catch (error) {
+    const e = parseError(error);
+
+    await Log.create({ path, 
+      statusCode: e.code, 
+      method: 'GET',
+      status: 'ERROR',
+      response: error.error, 
+      userId: req.headers.userId, 
+      payload: req.body 
+    });
+
+    console.log(`Error while trying to get traveller ${req.params.travellerKey}:  ${e.message}`);
+
+    return res.status(400).send({message: `Couldn\'t get all traveller ${req.params.travellerKey} with error ${e.message}.`});
+  }
+}
+
+
 module.exports = {
   makeReservation,
   abortReservation,
   createRoom,
   createTraveller,
-  updateTravellerPoints
+  updateTravellerPoints,
+  getTravelerBookings,
+  getRooms,
+  getTraveller
 }

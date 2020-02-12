@@ -12,21 +12,6 @@ const  users  = [
     token: 'private-token'
 	},
 	{
-		email:  "test@test.com",
-		role:  'CUSTOMER',
-		userId:  'KeyOne',
-    name: 'JohnDoe',
-    token: 'public-token-1' // MXFTroJt3r8037wCXq0wA+gWCTP1QoG884F5fdk39J4=
-	},
-	{
-		email:  "test2@test.com",
-		role:  'CUSTOMER',
-		userId:  'KeyTwo',
-    name: 'JohnDoe2',
-    token: 'public-token-2' // t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=
-    
-	},
-	{
 		email:  "test3@test.com",
 		role:  'CUSTOMER',
 		userId:  'KeyThree',
@@ -37,14 +22,6 @@ const  users  = [
 ];
 
 const  consumers  = [
-	{
-		api_key:  "MXFTroJt3r8037wCXq0wA+gWCTP1QoG884F5fdk39J4=",
-		type:  'public'
-  },
-  {
-		api_key:  "t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=",
-		type:  'public'
-  },
   {
 		api_key:  "vYSYLt1OzKvkWtmYuVUYmCRbSf20H4b/Gr1C1DzBmp8=",
 		type:  'public'

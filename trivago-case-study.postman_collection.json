@@ -84,6 +84,32 @@
 								"description": "This is a private route, that is used to update existing traveller bonus points.\n\nRequired in the request Body are userId (ADMIN user) (or his email).\n and also the bonisPoints attribute that represent new value.\n \nAlso traveller key is passed as a param."
 							},
 							"response": []
+						},
+						{
+							"name": "Get Rooms (Private)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{ApiGateWayUrl}}/api/rooms?email=admin@admin.com",
+									"protocol": "http",
+									"host": [
+										"{{ApiGateWayUrl}}"
+									],
+									"path": [
+										"api",
+										"rooms"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "admin@admin.com"
+										}
+									]
+								},
+								"description": "get all rooms in the system.\n\nprivate token should be present. in headers"
+							},
+							"response": []
 						}
 					],
 					"auth": {
@@ -193,7 +219,7 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{ApiGateWayUrl}}/api/bookings/020c6249-913b-40e6-8340-bb212028d446/cancel",
+									"raw": "http://{{ApiGateWayUrl}}/api/bookings/8afe43c4-5bf6-40e4-b951-18b7d62832c9/cancel",
 									"protocol": "http",
 									"host": [
 										"{{ApiGateWayUrl}}"
@@ -201,7 +227,7 @@
 									"path": [
 										"api",
 										"bookings",
-										"020c6249-913b-40e6-8340-bb212028d446",
+										"8afe43c4-5bf6-40e4-b951-18b7d62832c9",
 										"cancel"
 									]
 								},
@@ -242,6 +268,53 @@
 									]
 								},
 								"description": "Create Traveller. Public (to mimic traveller registeration).\n\nThe email attribute is required in the body, and also you can send name"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Traveller Bookings (Public)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{ApiGateWayUrl}}/api/bookings?email=test3@test.com",
+									"protocol": "http",
+									"host": [
+										"{{ApiGateWayUrl}}"
+									],
+									"path": [
+										"api",
+										"bookings"
+									],
+									"query": [
+										{
+											"key": "email",
+											"value": "test3@test.com"
+										}
+									]
+								},
+								"description": "A traveller can get his bookings from this route, by just providing his token in the headers"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Traveller (Public)",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{ApiGateWayUrl}}/api/travellers/KeyThree",
+									"protocol": "http",
+									"host": [
+										"{{ApiGateWayUrl}}"
+									],
+									"path": [
+										"api",
+										"travellers",
+										"KeyThree"
+									]
+								},
+								"description": "providing travellerKey in the params, and coreesponding token in the headers."
 							},
 							"response": []
 						}
@@ -329,19 +402,19 @@
 	],
 	"variable": [
 		{
-			"id": "ac961a13-4b07-4973-8767-be0fa056dae9",
+			"id": "34948b62-ee38-41fd-b0a6-bb98491cb96d",
 			"key": "ApiGateWayUrl",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "5c412fb9-7b36-4a96-963f-a17700173add",
+			"id": "695e2eb6-b4cd-4263-8db2-3bbac6b398f1",
 			"key": "public-api-secret",
 			"value": "",
 			"type": "string"
 		},
 		{
-			"id": "a8e99be8-08a7-459e-a40d-3cc936c62ece",
+			"id": "0e7b42a5-72f9-4825-8e7f-36c1cb2385cf",
 			"key": "private-api-secret",
 			"value": "",
 			"type": "string"

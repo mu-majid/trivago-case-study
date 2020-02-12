@@ -24,6 +24,10 @@ async function findOne(roomKey) {
   return room;
 }
 
+async function find() {
+  return await Room.find().lean().exec();
+}
+
 async function create(data) {
   data.roomKey = uuid.v4();
   const createdRoom = await Room.create(data);
@@ -40,5 +44,6 @@ async function create(data) {
 module.exports = {
   updateOne,
   findOne,
-  create
+  create,
+  find
 }

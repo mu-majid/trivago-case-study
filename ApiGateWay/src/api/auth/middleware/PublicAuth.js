@@ -8,7 +8,16 @@ const uuid = require('uuid');
 async function isAuthorizedPublic (req, res, next) {
 
   const { consumer_token } = req.headers;
-  const {email, userId} = req.body;
+  const emailFromBody  = req.body.email;
+  const emailFromQuery = req.query.email;
+  const email = emailFromBody || emailFromQuery;
+
+  const userIdFromBody  = req.body.userId;
+  const userIdFromParams  = req.params.travellerKey;
+
+  const userId = userIdFromBody || userIdFromParams;
+  
+
   const user = await User.findOne({$or: [{ email }, { userId }]}).lean().exec();
 
   if (!user) {

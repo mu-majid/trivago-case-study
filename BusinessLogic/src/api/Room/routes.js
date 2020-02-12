@@ -4,4 +4,7 @@ const router = express.Router();
 
 router.post('/', roomCtrl.createRoom);
 
+router.get('/', roomCtrl.getRooms);
+
+
 module.exports = router;

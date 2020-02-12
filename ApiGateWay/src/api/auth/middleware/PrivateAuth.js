@@ -4,7 +4,12 @@ const { createHmac } = require('crypto');
 
 async function isAuthorizedPrivate (req, res, next) {
 
-  const { email, userId } = req.body;
+  const emailFromBody  = req.body.email;
+  const userId  = req.body.userId
+  const emailFromQuery = req.query.email;
+
+  const email = emailFromBody || emailFromQuery
+
   const { consumer_token } = req.headers;
 
   const user = await User.findOne({$or: [{ email }, { userId }]}).lean().exec();

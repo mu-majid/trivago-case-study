@@ -11,7 +11,10 @@ const {
   cancelReservationSchema,
   createTravellerSchema,
   createRoomSchema,
-  updateTravellerPointsSchema
+  updateTravellerPointsSchema,
+  getTravelerBookingsSchema,
+  getTravellerSchema,
+  getRoomsSchema
 } = require('./schema/schemas');
 
 router.post('/bookings', [
@@ -26,15 +29,33 @@ router.post('/bookings/:bookingKey/cancel', [
   servicesCtrl.abortReservation
 ]);
 
+router.get('/bookings', [
+  RequestValidator(getTravelerBookingsSchema),
+  publicAuth,
+  servicesCtrl.getTravelerBookings
+]);
+
 router.post('/rooms', [
   RequestValidator(createRoomSchema), 
   privateAuth, 
   servicesCtrl.createRoom
 ]);
 
+router.get('/rooms', [
+  RequestValidator(getRoomsSchema),
+  privateAuth,
+  servicesCtrl.getRooms
+]);
+
 router.post('/travellers', [
   RequestValidator(createTravellerSchema),
   servicesCtrl.createTraveller
+]);
+
+router.get('/travellers/:travellerKey', [
+  RequestValidator(getTravellerSchema),
+  publicAuth,
+  servicesCtrl.getTraveller
 ]);
 
 router.put('/travellers/:travellerKey/points',[

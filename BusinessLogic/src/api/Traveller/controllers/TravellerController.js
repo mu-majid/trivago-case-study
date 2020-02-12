@@ -1,13 +1,13 @@
 const travellerService = require('../services/TravellerService');
 
 async function getTraveller(req, res) {
-  const { userId, email } = req.query;  
-  const traveller = await travellerService.findOne(userId, email);
+  const { travellerKey } = req.params;
+  const traveller = await travellerService.findOne(travellerKey);
 
   if (!traveller) {
     return res.status(404).json({
       statusCode: 404,
-      message: `Traveller Was Not Found`
+      message: `Traveller ${travellerKey} Was Not Found`
     });
   };
 

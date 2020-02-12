@@ -73,10 +73,39 @@ const updateTravellerPointsSchema = Joi.object({
   }).or('userId', 'email').required()
 });
 
+const getTravelerBookingsSchema = Joi.object({
+  headers: Joi.object({
+    authorization: Joi.string().required()
+  }),
+
+  query: Joi.object({
+    email: Joi.string().required()
+  })
+});
+
+const getRoomsSchema = Joi.object({
+  headers: Joi.object({
+    authorization: Joi.string().required()
+  })
+});
+
+const getTravellerSchema = Joi.object({
+  headers: Joi.object({
+    authorization: Joi.string().required()
+  }),
+
+  params: Joi.object({
+    travellerKey: Joi.string().required()
+  })
+});
+
 module.exports = {
   makeReservationSchema,
   cancelReservationSchema,
   createTravellerSchema,
   createRoomSchema,
-  updateTravellerPointsSchema
+  updateTravellerPointsSchema,
+  getTravelerBookingsSchema,
+  getRoomsSchema,
+  getTravellerSchema
 }

@@ -5,18 +5,6 @@ const Room = require('./api/Room/models/Room');
 
 const  travellers  = [
 	{
-		email:  "test@test.com",
-		bonusPoints:  75,
-		travellerKey:  'KeyOne',
-		name: 'JohnDoe'
-	},
-	{
-		email:  "test2@test.com",
-		bonusPoints:  150,
-		travellerKey:  'KeyTwo',
-		name: 'JohnDoe2'
-	},
-	{
 		email:  "test3@test.com",
 		bonusPoints:  35,
 		travellerKey:  'KeyThree',

@@ -4,6 +4,7 @@ const roomCtrl = express.Router();
 const roomService = require('../services/RoomService');
 
 
+
 async function createRoom (req, res) {
   const roomData = req.body;
   if (!(roomData.roomName && roomData.requiredPoints && roomData.availableAmount)) {
@@ -16,10 +17,24 @@ async function createRoom (req, res) {
   }
   catch (error) {
     console.log('roomService ERROR: ', error);
-    return res.status(400).send(new Error('Error While Creating Guest!'));
+    return res.status(400).send(new Error('Error While Creating Room!'));
+  }
+}
+
+async function getRooms (req, res) {
+
+  try {
+    const foundRooms = await roomService.find();    
+
+    return res.status(200).send({ data: foundRooms });
+  }
+  catch (error) {
+    console.log('roomService ERROR: ', error);
+    return res.status(400).send(new Error('Error While Fetching Rooms!'));
   }
 }
 
 module.exports = {
-  createRoom
+  createRoom,
+  getRooms
 };

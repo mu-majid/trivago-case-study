@@ -12,6 +12,12 @@ async function findOne(bookingKey, requestingUser) {
   return booking;
 }
 
+async function findTravellersBookings(requestingUser) {
+  const booking = await Booking.find({ travellerKey: requestingUser }).lean().exec();
+
+  return booking;
+}
+
 async function updateOne(bookingKey, updateObj) {
 
   let updatedBooking = await Booking.findOneAndUpdate(
@@ -145,6 +151,7 @@ module.exports = {
   findOne,
   bookRoom,
   cancelReservation,
+  findTravellersBookings,
   _test: {
     canUsePoints,
     updateOne

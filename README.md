@@ -153,6 +153,28 @@ Each service has its own database (following microservices architecture), and th
 		api_key: { type:  String, required:  true },
 		type: { type:  String, required:  true, enum: ['public', 'private'] },
 		```
+
+## API Documentation: 
+
+This part should be replaced with swagger docs (OpenApi 3.0) in the future.
+
+  ## Routes: 
+
+  - Private Route:
+
+	* `GET /api/rooms`: List all rooms in database.
+	* `POST /api/rooms`: Create a room (roomName, requiredPoints, availableAmount, (ADMIN userId or email)) are required in req body.
+	* `PUT /api/travellers/:travellerKey/points`: Update traveller bonusPoints (ADMIN userId or email) and bonusPoints are required in the request body.
+
+	- Public Routes:
+
+  * `POST /api/bookings`: Make Reservation. travellerKey, roomKey, (email or userId for traveller) are required in request body 
+	* `POST /api/bookings/:bookingKey/cancel`: cancel Reservation . email of the traveller is required in the body.
+	* `POST /api/travellers`: Creates a new traveller. email is required in request body.
+	* `GET /api/booking?email=traveller@email`: get booking for a traveller. email is required in req.query
+	* `GET /api/travellers/:travellerKey`: gets a traveller data (only if token matches key)
+
+
 ## Requirements
 
 
@@ -240,20 +262,6 @@ const  users  = [
 		token:  'private-token' // P/oa1XVdX0rkOQLNjNpAvv/2oCdZlC5fwzyaK/mvdPk=
 	},
 	{
-		email:  "test@test.com",
-		role:  'CUSTOMER',
-		userId:  'KeyOne',
-		name:  'JohnDoe',
-		token:  'public-token-1'  // MXFTroJt3r8037wCXq0wA+gWCTP1QoG884F5fdk39J4=
-	},
-	{
-		email:  "test2@test.com",
-		role:  'CUSTOMER',
-		userId:  'KeyTwo',
-		name:  'JohnDoe2',
-		token:  'public-token-2'  // t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=
-	},
-	{
 		email:  "test3@test.com",
 		role:  'CUSTOMER',
 		userId:  'KeyThree',
@@ -263,14 +271,6 @@ const  users  = [
 ];
 
 const  consumers  = [
-	{
-		api_key:  "MXFTroJt3r8037wCXq0wA+gWCTP1QoG884F5fdk39J4=",
-		type:  'public'
-	},
-	{
-		api_key:  "t3sgjSE66KsuTBtRI21/PUU7oPUpwwIOrzpAUPrrW/8=",
-		type:  'public'
-	},
 	{
 		api_key:  "vYSYLt1OzKvkWtmYuVUYmCRbSf20H4b/Gr1C1DzBmp8=",
 		type:  'public'
@@ -339,19 +339,29 @@ Right click on the imported collection click `Edit` to set variables for the col
 
 ![Alt text](images/import-collection-4.png?raw=true "Image 4")
 
-Provide variables for the collection: (Change these variables when you want test different tokens)
+Provide variables for the collection: (Change these variables when you want test different tokens permissions):
+	``` javascript	
+			[{
+				"public-api-secret":  "vYSYLt1OzKvkWtmYuVUYmCRbSf20H4b/Gr1C1DzBmp8="
+			},
+			{
+				"private-api-secret":  "P/oa1XVdX0rkOQLNjNpAvv/2oCdZlC5fwzyaK/mvdPk="
+			}]
+	```	
+
+NOTE: Admin email is admin@admin.com and his userId is `111`.
 
 ![Alt text](images/import-collection-5.png?raw=true "Image 5")
 
 Then right-click on the `Private Calls` folder, and write the following in the Authorization tab
 
-![Alt text](images/import-collection-5.png?raw=true "Image 6")
+![Alt text](images/import-collection-6.png?raw=true "Image 6")
 
-![Alt text](images/import-collection-5.png?raw=true "Image 7")
+![Alt text](images/import-collection-7.png?raw=true "Image 7")
 
 And the sane for the `Public Folder`:
 
-![Alt text](images/import-collection-5.png?raw=true "Image 8")
+![Alt text](images/import-collection-8.png?raw=true "Image 8")
 
   
   

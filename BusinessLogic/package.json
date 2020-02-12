@@ -8,7 +8,10 @@
   },
   "nyc": {
     "include": "src",
-    "exclude": ["src/api/Room", "src/api/Traveller"]
+    "exclude": [
+      "src/api/Room",
+      "src/api/Traveller"
+    ]
   },
   "scripts": {
     "test": "export NODE_ENV=testing && mocha 'src/**/**.spec.js'",

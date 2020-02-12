@@ -6,7 +6,7 @@ const canAccessRouter = require('../../middleware/canAccessRouter');
 
 const hasPrivateApiKey = canAccessRouter(privateAccessPolicyKey);
 
-router.get('/', travellerCtrl.getTraveller);
+router.get('/:travellerKey', travellerCtrl.getTraveller);
 router.post('/', travellerCtrl.createTraveller);
 router.put('/:travellerKey/points', travellerCtrl.updateTravellerPoints);
 

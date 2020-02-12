@@ -47,7 +47,7 @@ async function makeReservation (req, res) {
   }
   catch (error) {
     console.log('bookingService ERROR: ', error);
-    return res.status(400).send(new Error('Error While Making Reservation!'));
+    return res.status(400).send({message: 'Error While Making Reservation!'});
   }
 }
 
@@ -79,11 +79,26 @@ async function abortReservation(req, res) {
   }
   catch (error) {
     console.log('bookingService ERROR: ', error);
-    return res.status(400).send(new Error('Error While Cancelling Reservation!'));
+    return res.status(400).send({message: 'Error While Cancelling Reservation!'});
+  }
+}
+
+async function getTravellerBookings (req, res) {
+  const requestingUser = req.headers['userid'];
+
+  try {
+    const foundBooking = await bookingService.findTravellersBookings(requestingUser);
+    
+    return res.status(200).send({ data: foundBooking });
+  } 
+  catch (error) {
+    console.log('bookingService ERROR: ', error);
+    return res.status(400).send({ message: `Could not find reservations.`});
   }
 }
 
 module.exports = {
   makeReservation,
-  abortReservation
+  abortReservation,
+  getTravellerBookings
 };
