@@ -42,8 +42,6 @@ Further Enhancements :
   
 
 ## Introduction
-
-This project is a submission for a task sent by trivago for the recruitment process for a NodeJS job vacancy.
   
 For one of your next big projects, the team has decided to go with microservices. There are multiple
 experienced engineers with strong knowledge in NodeJS and while other programming languages
